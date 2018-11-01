@@ -1,1 +1,1 @@
-from .mowu import mowu
+from .timu import timu
