@@ -7,6 +7,7 @@ mowu (Mongolian Word Unifier)
 
 
 import sys
+import os
 import array
 import gi
 from gi.repository import GLib
@@ -29,16 +30,21 @@ except NameError:
 
 class Shaper():
     def __init__(self, font_path):
-        fontdata = open(font_path, 'rb').read()
-        blob = hb.glib_blob_create(GLib.Bytes.new(fontdata))
-        face = hb.face_create(blob, 0)
-        del blob
-        self.__font = hb.font_create(face)
-        upem = hb.face_get_upem(face)
-        del face
-        hb.font_set_scale(self.__font, upem, upem)
-        #hb.ft_font_set_funcs (font)
-        hb.ot_font_set_funcs(self.__font)
+        try:
+            assert os.path.isfile(font_path)
+            fontdata = open(font_path, 'rb').read()
+
+            blob = hb.glib_blob_create(GLib.Bytes.new(fontdata))
+            face = hb.face_create(blob, 0)
+            del blob
+            self.__font = hb.font_create(face)
+            upem = hb.face_get_upem(face)
+            del face
+            hb.font_set_scale(self.__font, upem, upem)
+            #hb.ft_font_set_funcs (font)
+            hb.ot_font_set_funcs(self.__font)
+        except:
+            print(font_path)
 
     def render(self, text_="abvd", flag=False):
         text= text_
@@ -111,20 +117,28 @@ def get_default_glyph_sub_table():
     }
 
 
-
-class mowu():
+class timu():
     
     __hash_to_id_dict = defaultdict(lambda: list())
     __gid_to_uniq_gid = dict()
 
     
-    def __init__(self, font_path):
-        self.__font_path = font_path
+    def __init__(self, font_path = ""):
+        if not font_path:
+            this_dir, this_filename = os.path.split(__file__)
+            self.__font_path = os.path.join(
+                this_dir,
+                "MongolianWhite3.ttf"
+            )
+        else:
+            self.__font_path = font_path
         self.__render_all_glyphs()
         self.__glyph_sub_table = get_default_glyph_sub_table()
-        self.__shaper = Shaper(font_path)
+        self.__shaper = Shaper(self.__font_path)
 
         
+    def __get_font_path(self):
+        return self.__font_path
     def __render_glyph(self, face, gid):
         face.load_glyph(gid)
 

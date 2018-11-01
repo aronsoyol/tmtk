@@ -17,4 +17,6 @@ setup(name='timu',
                         'imagehash',
                         'pygobject'],
       packages=['timu'],
+      include_package_data=True,
+      package_data={'timu': ['MongolianWhite3.ttf']},
       )
