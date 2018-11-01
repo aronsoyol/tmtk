@@ -1,1 +1,0 @@
-from .timu import timu
