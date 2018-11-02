@@ -23,6 +23,9 @@ from gi.repository import HarfBuzz as hb
 from PIL import Image
 
 
+from tqdm import tqdm
+import json
+
 
 try:
     unicode
@@ -171,7 +174,7 @@ class Unifier():
             for gid in gls:
                 self.__gid_to_uniq_gid[gid] = gls[0]
 
-    def __glyph_decompositoin(self, g_lst):
+    def glyph_decompositoin(self, g_lst):
         ls = []
         for g in g_lst:
             if g in self.__glyph_sub_table:
@@ -180,11 +183,14 @@ class Unifier():
                 ls.append(g)
         return ls
 
+    def render(self, word):
+        return self.__shaper.render(word)
+
     def get_uniq_gid_list(self, word):
-        g_lst = self.__shaper.render(word)
-        return g_lst
+        g_lst = self.render(word)
         ls = []
         for g in g_lst:
             if g in self.__gid_to_uniq_gid:
                 ls.append(self.__gid_to_uniq_gid[g])
         return self.__glyph_decompositoin(ls)
+
