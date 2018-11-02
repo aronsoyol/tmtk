@@ -6,7 +6,7 @@
 from distutils.core import setup
 
 setup(name='timu',
-      version='1.0',
+      version='0.0.1 alpha',
       description='Traditional Mongolian Word Unifer',
       author='Aronsoyol',
       author_email='aronsoyol@gmail.com',

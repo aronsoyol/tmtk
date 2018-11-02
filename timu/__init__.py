@@ -1,2 +1,2 @@
 
-from . import timu
+from .timu import timu

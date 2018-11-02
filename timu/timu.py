@@ -6,27 +6,27 @@ mowu (Mongolian Word Unifier)
 """
 
 
-import sys
-import os
 import array
-import gi
-from gi.repository import GLib
-gi.require_version('HarfBuzz', '0.0')
-from gi.repository import HarfBuzz as hb
-import freetype
-import numpy
-from PIL import Image
-import imagehash
+import os
+import sys
 from collections import defaultdict
 
+import freetype
+import gi
+import imagehash
+import numpy
+from gi.repository import GLib
+from gi.repository import HarfBuzz as hb
+from PIL import Image
 
+gi.require_version('HarfBuzz', '0.0')
+
+__version__=="0.0.1"
 
 try:
     unicode
 except NameError:
     unicode = str
-
-
 
 class Shaper():
     def __init__(self, font_path):
@@ -136,9 +136,9 @@ class timu():
         self.__glyph_sub_table = get_default_glyph_sub_table()
         self.__shaper = Shaper(self.__font_path)
 
-        
     def __get_font_path(self):
         return self.__font_path
+
     def __render_glyph(self, face, gid):
         face.load_glyph(gid)
 
@@ -150,8 +150,7 @@ class timu():
                           ).reshape((bitmap.rows, bitmap.width))
         return arr
 
-
-    def __render_all_glyphs(self ):
+    def __render_all_glyphs(self):
         hdict = {}
         face = freetype.Face(self.__font_path)
         face.set_char_size(48 * 64)
@@ -159,35 +158,33 @@ class timu():
         for n in range(face.num_glyphs):
             arr = self.__render_glyph(face, n)
 
-            if not arr is None:
+            if arr is not None:
                 img = Image.fromarray(numpy.uint8(arr))
                 if img:
                     hs = str(imagehash.phash(img))
                     hdict[n] = hs
 
-        
-
         for g_id, hs in sorted(hdict.items(), key=lambda a: a[1]):
             self.__hash_to_id_dict[hs].append(g_id)
-        
+
         for gls in self.__hash_to_id_dict.values():
             for gid in gls:
                 self.__gid_to_uniq_gid[gid] = gls[0]
-
 
     def __glyph_decompositoin(self, g_lst):
         ls = []
         for g in g_lst:
             if g in self.__glyph_sub_table:
-                ls.extend(self.__glyph_sub_table[g] )
+                ls.extend(self.__glyph_sub_table[g])
             else:
                 ls.append(g)
         return ls
 
     def get_uniq_gid_list(self, word):
         g_lst = self.__shaper.render(word)
+        return g_lst
         ls = []
         for g in g_lst:
             if g in self.__gid_to_uniq_gid:
-                ls.append( self.__gid_to_uniq_gid[g])
+                ls.append(self.__gid_to_uniq_gid[g])
         return self.__glyph_decompositoin(ls)
