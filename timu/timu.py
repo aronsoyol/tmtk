@@ -192,5 +192,5 @@ class Unifier():
         for g in g_lst:
             if g in self.__gid_to_uniq_gid:
                 ls.append(self.__gid_to_uniq_gid[g])
-        return self.__glyph_decompositoin(ls)
+        return self.glyph_decompositoin(ls)
 
