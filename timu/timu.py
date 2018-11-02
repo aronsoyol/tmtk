@@ -21,12 +21,12 @@ from PIL import Image
 
 gi.require_version('HarfBuzz', '0.0')
 
-__version__=="0.0.1"
 
 try:
     unicode
 except NameError:
     unicode = str
+
 
 class Shaper():
     def __init__(self, font_path):
