@@ -13,13 +13,15 @@ from collections import defaultdict
 
 import freetype
 import gi
+gi.require_version('HarfBuzz', '0.0')
+
+
 import imagehash
 import numpy
 from gi.repository import GLib
 from gi.repository import HarfBuzz as hb
 from PIL import Image
 
-gi.require_version('HarfBuzz', '0.0')
 
 
 try:
@@ -104,7 +106,6 @@ class Shaper():
         return [info.codepoint for info in infos]
 
 
-
 def get_default_glyph_sub_table():
     return {
         213:  (212, 212),
@@ -117,13 +118,12 @@ def get_default_glyph_sub_table():
     }
 
 
-class timu():
-    
+class Unifier():
+
     __hash_to_id_dict = defaultdict(lambda: list())
     __gid_to_uniq_gid = dict()
 
-    
-    def __init__(self, font_path = ""):
+    def __init__(self, font_path=""):
         if not font_path:
             this_dir, this_filename = os.path.split(__file__)
             self.__font_path = os.path.join(
