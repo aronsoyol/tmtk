@@ -19,4 +19,5 @@ setup(
     packages=['timu'],
     include_package_data=True,
     package_data={'timu': ['MongolianWhite3.ttf']},
+    test_suite='test'
 )

@@ -51,8 +51,8 @@ class Shaper():
         except:
             print(font_path)
 
-    def render(self, text_="abvd", flag=False):
-        text= text_
+    def shape(self, text_="abvd", flag=False):
+        text = text_
         # Need to create GLib.Bytes explicitly until this bug is fixed:
         # https://bugzilla.gnome.org/show_bug.cgi?id=729541
 
@@ -135,6 +135,12 @@ class Unifier():
             )
         else:
             self.__font_path = font_path
+
+        assert os.path.isfile(self.__font_path)
+
+        self.__ft_face = freetype.Face(self.__font_path)
+        self.__ft_face.set_char_size(48 * 64)
+
         self.__render_all_glyphs()
         self.__glyph_sub_table = get_default_glyph_sub_table()
         self.__shaper = Shaper(self.__font_path)
@@ -142,10 +148,10 @@ class Unifier():
     def __get_font_path(self):
         return self.__font_path
 
-    def __render_glyph(self, face, gid):
-        face.load_glyph(gid)
+    def render_glyph(self, gid):
+        self.__ft_face.load_glyph(gid)
 
-        bitmap = face.glyph.bitmap
+        bitmap = self.__ft_face.glyph.bitmap
         if len(bitmap.buffer) == 0:
             return None
 
@@ -155,11 +161,9 @@ class Unifier():
 
     def __render_all_glyphs(self):
         hdict = {}
-        face = freetype.Face(self.__font_path)
-        face.set_char_size(48 * 64)
 
-        for n in range(face.num_glyphs):
-            arr = self.__render_glyph(face, n)
+        for n in range(self.__ft_face.num_glyphs):
+            arr = self.render_glyph(n)
 
             if arr is not None:
                 img = Image.fromarray(numpy.uint8(arr))
@@ -183,14 +187,42 @@ class Unifier():
                 ls.append(g)
         return ls
 
-    def render(self, word):
-        return self.__shaper.render(word)
+    def render(self, text):
+        pass
+
+    def shape(self, text):
+        return self.__shaper.shape(text)
 
     def get_uniq_gid_list(self, word):
-        g_lst = self.render(word)
+        g_lst = self.shape(word)
         ls = []
         for g in g_lst:
             if g in self.__gid_to_uniq_gid:
                 ls.append(self.__gid_to_uniq_gid[g])
         return self.glyph_decompositoin(ls)
 
+
+def main():
+    unifier = Unifier()
+    data_set = []
+    with open("/Users/aron/dev/workspace/topic_model/qinggis_train_data_0.json", "r") as json_file_0:
+        for line in json_file_0:
+            data = json.loads(line.strip())
+            data_set.append(data)
+
+    token_set = set()
+
+    gid_to_word = defaultdict(lambda: list())
+    for data in tqdm(data_set):
+        for token in data["token"]:
+            # gid_list = unifier.get_uniq_gid_list(token)
+            token_set.add(token)
+            # gid_to_word[json.dumps(gid_list)] += token
+
+    for token in tqdm(token_set):
+        gid_list = unifier.get_uniq_gid_list(token)
+        gid_to_word[json.dumps(gid_list)].append(token)
+
+
+if __name__ == '__main__':
+    main()
