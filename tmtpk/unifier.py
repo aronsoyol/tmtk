@@ -6,11 +6,11 @@ mowu (Mongolian Word Unifier)
 """
 
 
-import array
 import json
 import os
-import sys
 from collections import defaultdict
+
+from .shaper import Shaper
 
 import freetype
 import gi

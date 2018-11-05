@@ -1,6 +1,6 @@
 import unittest
-from timu import Unifier
-from timu import Tokenizer
+from tmtpk import Unifier
+from tmtpk import Tokenizer
 
 unifier = Unifier()
 # from timu import timu

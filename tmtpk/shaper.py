@@ -1,16 +1,19 @@
-from gi.repository import HarfBuzz as hb
-import freetype
+import sys
+import os
+
+import array
 import gi
-import imagehash
-import numpy
 from gi.repository import GLib
 gi.require_version('HarfBuzz', '0.0')
+from gi.repository import HarfBuzz as hb
 
 
 class Shaper():
+
     def __init__(self, font_path):
         try:
             assert os.path.isfile(font_path)
+            print(font_path)
             fontdata = open(font_path, 'rb').read()
 
             blob = hb.glib_blob_create(GLib.Bytes.new(fontdata))
