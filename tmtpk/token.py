@@ -57,7 +57,7 @@ class Tokenizer():
                 garray_str = garray
                 garray = json.loads(garray_str)
 
-            words = self.__dictionary.get(garray, None)
+            words = self.__dictionary.get(garray_str, None)
 
             if words:
                 taglist = []
