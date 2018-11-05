@@ -46,11 +46,16 @@ class Tokenizer():
         unifier = Unifier()
         for token in word_list:
             garray = word2garray.get(token, None)
+            garray_str = ""
+
             if not garray:
                 garray = unifier.get_uniq_gid_list(token)
 
             if isinstance(garray, list):
-                garray = json.dumps(garray)
+                garray_str = json.dumps(garray)
+            else:
+                garray_str = garray
+                garray = json.loads(garray_str)
 
             words = self.__dictionary.get(garray, None)
 
@@ -61,5 +66,8 @@ class Tokenizer():
 
                 yield (token, garray, list(set(taglist)))
             else:
-                yield (token, garray, ["UNK"])
-
+                if garray[:3] == [659, 212, 660]:
+                    taglist = ["名"]
+                else:
+                    taglist = ["UNK"]
+                yield (token, garray, taglist)
