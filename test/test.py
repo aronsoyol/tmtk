@@ -3,6 +3,7 @@ from tmtpk import Unifier
 from tmtpk import Tokenizer
 
 unifier = Unifier()
+tokenizer = Tokenizer()
 # from timu import timu
 
 unsusuten_list = [
@@ -27,8 +28,8 @@ class TestTimu(unittest.TestCase):
         expected = ['ᠰᠠᠷ\u180eᠠ', 'ᠭᠠᠵᠠᠷ', 'ᠤᠰᠤᠨ', '\u202fᠣ',
                     'ᠪᠦᠷᠢᠳᠭᠡᠯ', 'ᠬᠢᠵᠦ', 'ᠬᠢᠵᠦ', 'ᠤᠰᠤᠨ',
                     '\u202fᠣ', '\u202fᠣ', '\u202fᠣ']
-        
-        result = Tokenizer().tokenize(
+
+        result = tokenizer.tokenize(
             text,
             split_suffix=True,
             only_mongolian=True)
@@ -42,6 +43,28 @@ class TestTimu(unittest.TestCase):
                 unifier.get_uniq_gid_list(unsusuten_list[0]),
                 unifier.get_uniq_gid_list(unsusuten),
             )
+
+    def testTagger(self):
+        text = "ᠭᠠᠵᠠᠷ ᠤᠰᠤᠨ ‍ᠣ ᠪᠦᠷᠢᠳᠭᠡᠯ ᠬᠢᠵᠥ"
+
+        result = tokenizer.tokenize(
+            text,
+            split_suffix=True,
+            only_mongolian=True)
+
+        word2garray = {}
+        result = [token for token in result if  token[0] not in ["\u202f", "\u200d"]]
+        for token in result:
+            garray = unifier.get_uniq_gid_list(token)
+            word2garray[token] = garray
+        print(word2garray)
+
+        for tag in tokenizer.tagger(result, word2garray):
+            print("#"*50)
+            print(tag)
+            print("#"*50)
+            print()
+            pass
 
     def test_two(self):
         self.assertEqual(

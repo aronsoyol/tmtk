@@ -44,9 +44,11 @@ def get_default_glyph_sub_table():
         236:  (210, 239),
         241:  (242, 242),
         246:  (210, 248),
+        266:  (247, 250),
         270:  (210, 248, 239),
         273:  (248, 239),
-        687:  (248, 212)
+        687:  (248, 212),
+
     }
 
 
@@ -73,6 +75,12 @@ class Unifier():
         self.__render_all_glyphs()
         self.__glyph_sub_table = get_default_glyph_sub_table()
         self.__shaper = Shaper(self.__font_path)
+
+    def set_glyph_sub_table(self, table):
+        self.__glyph_sub_table = table
+
+    def get_glyph_sub_table(self):
+        return get_default_glyph_sub_table()
 
     def __get_font_path(self):
         return self.__font_path

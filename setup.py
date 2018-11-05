@@ -18,6 +18,6 @@ setup(
         'pygobject'],
     packages=['tmtpk'],
     include_package_data=True,
-    package_data={'tmtpk': ['MongolianWhite3.ttf']},
+    package_data={'tmtpk': ['MongolianWhite3.ttf', 'dictionary_garray.json']},
     test_suite='test'
 )

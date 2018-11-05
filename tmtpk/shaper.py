@@ -14,18 +14,25 @@ class Shaper():
         try:
             assert os.path.isfile(font_path)
             print(font_path)
-            fontdata = open(font_path, 'rb').read()
+            font_file = open(font_path, "br")
+            fontdata = font_file.read()
 
             blob = hb.glib_blob_create(GLib.Bytes.new(fontdata))
+
+            del fontdata
+
             face = hb.face_create(blob, 0)
             del blob
             self.__font = hb.font_create(face)
             upem = hb.face_get_upem(face)
+
             del face
+            font_file.close()
+
             hb.font_set_scale(self.__font, upem, upem)
             #hb.ft_font_set_funcs (font)
             hb.ot_font_set_funcs(self.__font)
-        except:
+        except Exception:
             print(font_path)
 
     def shape(self, text_="abvd", flag=False):
