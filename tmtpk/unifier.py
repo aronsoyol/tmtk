@@ -88,17 +88,23 @@ class Unifier():
                           ).reshape((bitmap.rows, bitmap.width))
         return arr
 
+    def draw_glyph(self, gid):
+        try:
+            return Image.fromarray(
+                numpy.uint8(
+                    self.render_glyph(gid)))
+        except Exception:
+            return None
+
     def __render_all_glyphs(self):
         hdict = {}
 
         for n in range(self.__ft_face.num_glyphs):
-            arr = self.render_glyph(n)
+            img = self.draw_glyph(n)
 
-            if arr is not None:
-                img = Image.fromarray(numpy.uint8(arr))
-                if img:
-                    hs = str(imagehash.phash(img))
-                    hdict[n] = hs
+            if img:
+                hs = str(imagehash.phash(img))
+                hdict[n] = hs
 
         for g_id, hs in sorted(hdict.items(), key=lambda a: a[1]):
             self.__hash_to_id_dict[hs].append(g_id)
