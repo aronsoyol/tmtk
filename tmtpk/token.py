@@ -66,7 +66,7 @@ class Tokenizer():
 
                 yield (token, garray, list(set(taglist)))
             else:
-                if garray[:3] == [659, 212, 660]:
+                if garray[-3:] == [659, 212, 660]:
                     taglist = ["名"]
                 else:
                     taglist = ["UNK"]

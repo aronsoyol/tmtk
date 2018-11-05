@@ -45,7 +45,7 @@ class TestTimu(unittest.TestCase):
             )
 
     def testTagger(self):
-        text = "ᠭᠠᠵᠠᠷ ᠤᠰᠤᠨ ‍ᠣ ᠪᠦᠷᠢᠳᠭᠡᠯ ᠬᠢᠵᠥ"
+        text = "ᠭᠠᠵᠠᠷ ᠤᠰᠤᠨ ‍ᠣ ᠪᠦᠷᠢᠳᠭᠡᠯ ᠬᠢᠵᠥ ᠤᠵᠵᠯᠠᠤᠠᠪᠤᠷᠵᠯᠠᠯ'"
 
         result = tokenizer.tokenize(
             text,
@@ -65,6 +65,8 @@ class TestTimu(unittest.TestCase):
             print("#"*50)
             print()
             pass
+        
+
 
     def test_two(self):
         self.assertEqual(
