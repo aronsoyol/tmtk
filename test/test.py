@@ -1,5 +1,6 @@
 import unittest
 from timu import Unifier
+from timu import Tokenizer
 
 unifier = Unifier()
 # from timu import timu
@@ -18,11 +19,21 @@ unsusuten_list = [
 
 
 class TestTimu(unittest.TestCase):
-    def setUp(self):
-        self.assertEqual(
-            unifier.get_uniq_gid_list("ᠠᠷᠢᠭᠤᠨᠰᠤᠶᠤᠯ"),
-            [209, 727, 239, 489, 248, 212, 665, 248, 719, 248, 660]
-        )
+    # def setUp(self):
+
+    def testTokenizer(self):
+        text = 'ᠰᠠᠷ\u180eᠠ aᠭᠠᠵᠠᠷ ᠤᠰᠤᠨ\u202fᠣasdfᠪᠦᠷᠢᠳᠭᠡᠯ好 ᠬᠢᠵᠦ᠃ᠬᠢᠵᠦ ᠤᠰᠤᠨ\u202fᠣ\u202fᠣ\u202fᠣ'
+
+        expected = ['ᠰᠠᠷ\u180eᠠ', 'ᠭᠠᠵᠠᠷ', 'ᠤᠰᠤᠨ', '\u202fᠣ',
+                    'ᠪᠦᠷᠢᠳᠭᠡᠯ', 'ᠬᠢᠵᠦ', 'ᠬᠢᠵᠦ', 'ᠤᠰᠤᠨ',
+                    '\u202fᠣ', '\u202fᠣ', '\u202fᠣ']
+        
+        result = Tokenizer().tokenize(
+            text,
+            split_suffix=True,
+            only_mongolian=True)
+
+        self.assertEqual(result, expected)
 
     def test_one(self):
         # self.assertEqual(len(unsusuten_list), 40)
