@@ -13,7 +13,6 @@ class Shaper():
     def __init__(self, font_path):
         try:
             assert os.path.isfile(font_path)
-            print(font_path)
             font_file = open(font_path, "br")
             fontdata = font_file.read()
 

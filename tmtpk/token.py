@@ -61,5 +61,5 @@ class Tokenizer():
 
                 yield (token, garray, list(set(taglist)))
             else:
-                yield (token, garray, ["UNKOWN"])
+                yield (token, garray, ["UNK"])
 
