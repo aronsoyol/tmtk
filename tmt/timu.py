@@ -7,24 +7,30 @@ mowu (Mongolian Word Unifier)
 
 
 import array
+import json
 import os
+import re
 import sys
 from collections import defaultdict
 
 import freetype
 import gi
-gi.require_version('HarfBuzz', '0.0')
-
-
 import imagehash
 import numpy
 from gi.repository import GLib
+gi.require_version('HarfBuzz', '0.0')
+
 from gi.repository import HarfBuzz as hb
 from PIL import Image
-
-
 from tqdm import tqdm
-import json
+
+
+MONGOLIAN_PUNCTUATIONS = [chr(w) for w in range(0x1800, 0x180a)]
+MONGOLIAN_DIGISTS = [chr(w) for w in range(0x1810, 0x181a)]
+MONGOLIAN_CONTROL_CHAR = [chr(w) for w in range(
+    0x180b, 0x180f)] + ["\u200c", "\u200d", "\u202f"]
+MONGOLIAN_WORD_CHAR = [chr(a) for a in range(
+    0x1820, 0x18ab)] + MONGOLIAN_CONTROL_CHAR
 
 
 try:
@@ -98,14 +104,6 @@ class Shaper():
         infos = hb.buffer_get_glyph_infos(buf)
         # positions = hb.buffer_get_glyph_positions(buf)
 
-    #     for info,pos in zip(infos, positions):
-    #         gid = info.codepoint
-    #         cluster = info.cluster
-    #         x_advance = pos.x_advance
-    #         x_offset = pos.x_offset
-    #         y_offset = pos.y_offset
-
-    #         print("gid %04d=%d@%d,%d+%d" % (gid, cluster, x_advance, x_offset, y_offset))
         return [info.codepoint for info in infos]
 
 
@@ -119,6 +117,25 @@ def get_default_glyph_sub_table():
         273:  (248, 239),
         687:  (248, 212)
     }
+
+
+class Tokenizer():
+    __ptrn2 = re.compile("(\u202f[^\u202f ]+)")
+    __ptrn1 = re.compile("([{0}]+)".format("".join(MONGOLIAN_WORD_CHAR)))
+
+    def tokenize(self, text, split_suffix=False, only_mongolian=True):
+        level1 = self.__ptrn1.split(text)
+        if only_mongolian:
+            level1 = level1[1::2]
+
+        if not split_suffix:
+            return level1
+
+        level2 = []
+        for item in level1:
+            level2_sub = self.__ptrn2.split(item)
+            level2 += [item for item in level2_sub if item]
+        return level2
 
 
 class Unifier():
@@ -200,6 +217,11 @@ class Unifier():
             if g in self.__gid_to_uniq_gid:
                 ls.append(self.__gid_to_uniq_gid[g])
         return self.glyph_decompositoin(ls)
+
+
+    # def unify_corpus(self):
+        
+
 
 
 def main():

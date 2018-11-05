@@ -4,20 +4,20 @@
 # from distutils.core import setup
 from setuptools import setup
 setup(
-    name='timu',
-    version='1.0.2',
-    description='Traditional Mongolian Word Unifer',
+    name='tmtpk',
+    version='1.0.3',
+    description='Traditional Mongolian Text Processing Kit',
     author='Aronsoyol',
     author_email='aronsoyol@gmail.com',
-    url='https://github.com/aronsoyol/timu',
+    url='https://github.com/aronsoyol/tmtpk',
     install_requires=[
         'freetype-py',
         'numpy',
         'pillow',
         'imagehash',
         'pygobject'],
-    packages=['timu'],
+    packages=['tmtpk'],
     include_package_data=True,
-    package_data={'timu': ['MongolianWhite3.ttf']},
+    package_data={'tmtpk': ['MongolianWhite3.ttf']},
     test_suite='test'
 )
