@@ -15,8 +15,6 @@ font_path = os.path.join(
 # ft_face = ft.new_face(font_path)
 ft_face = ft.new_face(font_path)
 
-
-print(type(ft_face))
 # assert isinstance(ft_face, hb.Face)
 ft_face.set_char_size(size=1, resolution=qah.base_dpi)
 
@@ -26,6 +24,7 @@ hb_font = hb.Font.ft_create(ft_face)
 class Shaper2():
     def __init__(self, font_path=""):
         pass
+
     def shape(self, word):
         buf = hb.Buffer.create()
         buf.add_str(word)
