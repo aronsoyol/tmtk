@@ -106,6 +106,9 @@ class Unifier():
         except Exception:
             return None
 
+    def show_unicode(word):
+        return [hex(ord(w)) for w in word]
+
     def __render_all_glyphs(self):
         hdict = {}
 
