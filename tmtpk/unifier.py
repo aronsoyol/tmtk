@@ -114,12 +114,14 @@ class Unifier():
                 hs = str(imagehash.phash(img))
                 hdict[n] = hs
 
-        for g_id, hs in sorted(hdict.items(), key=lambda a: a[1]):
+        for g_id, hs in hdict.items():
             self.__hash_to_id_dict[hs].append(g_id)
 
         for gls in self.__hash_to_id_dict.values():
+            # 选择最小的ID进行统一
+            min_id = min(gls)
             for gid in gls:
-                self.__gid_to_uniq_gid[gid] = gls[0]
+                self.__gid_to_uniq_gid[gid] = min_id
 
     def glyph_decompositoin(self, g_lst):
         ls = []
