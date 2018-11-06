@@ -96,8 +96,9 @@ class Tokenizer():
                 if tuple(garray[-len(suffix):]) == suffix:
                     taglist += ["动"]
 
-            for suffix in external_verb_suffix_pattern:
-                if tuple(garray[-len(suffix):]) == suffix:
-                    taglist += ["动"]
+            if external_verb_suffix_pattern:
+                for suffix in external_verb_suffix_pattern:
+                    if tuple(garray[-len(suffix):]) == suffix:
+                        taglist += ["动"]
 
             yield (token, garray, list(set(taglist)))
