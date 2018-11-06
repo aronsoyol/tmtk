@@ -136,7 +136,7 @@ class Tokenizer():
                     if tuple(garray[-len(ptrn):]) == ptrn:
                         taglist += tag
                         break
-            if external_verb_suffix_pattern:
+            if external_suffix_pattern:
                 for (tag, patterns) in external_suffix_pattern:
                     for ptrn in patterns:
                         if tuple(garray[-len(ptrn):]) == ptrn:
