@@ -11,25 +11,64 @@ MONGOLIAN_CONTROL_CHAR = [chr(w) for w in range(
 MONGOLIAN_WORD_CHAR = [chr(a) for a in range(
     0x1820, 0x18ab)] + MONGOLIAN_CONTROL_CHAR
 
-default_verb_suffix_pattern = (
-    # gvljv
-    (489, 248, 659, 710, 250),
-    # gsan
-    (212, 212, 665, 212, 214),
-    # lagsan
-    (659, 212, 212, 212, 665, 212, 214),
-    # leegsen
-    (659, 212, 634, 212, 214),
-    # lehu
-    (659, 212, 523),
-    # lahv
-    (659, 212, 212, 250),
-    # gdehu
-    (637, 212, 523),
-    # dahv
-    (685, 212, 212, 212, 250),
-    # qiheged
-    (704, 239, 499, 499, 699),
+default_suffix_pattern = (
+    # [ae]jvu
+    (
+        ("动"),
+        (
+            # l[ae]n
+            (659, 212, 214),
+            # rqu
+            (727, 704, 250),
+            # 
+            (212, 710, 250),
+            # gvljv
+            (489, 248, 659, 710, 250),
+            # gsan
+            (212, 212, 665, 212, 214),
+            # gsen
+            (634, 212, 214),
+            # gad
+            (489, 212, 699),
+            # ged
+            # ()
+            # dag
+            (685, 212, 492),
+            # gulhu
+            (516, 659, 523),
+            # lagsan
+            (659, 212, 212, 212, 665, 212, 214),
+            # leegsen
+            (659, 212, 634, 212, 214),
+            # lehu
+            (659, 212, 523),
+            # lahv
+            (659, 212, 212, 250),
+            # gdehu
+            (637, 212, 523),
+            # gdahv
+            (212, 212, 685, 212, 212, 212, 250),
+            # dahv
+            (685, 212, 212, 212, 250),
+            # qiheged
+            (704, 239, 499, 499, 699),
+            # gdeged
+            (637, 212, 499, 699),
+            # r[ae]j[vu]
+            (727, 212, 710, 250)
+        )
+    ), (
+        ("形"),
+        (
+            ("685, 212, 243"),
+        )
+    ), (
+        ("名"),
+        (
+            (685, 212, 660),
+        )
+    )
+
 )
 
 
@@ -66,7 +105,7 @@ class Tokenizer():
 
     def tagger(self,
                word_list, word2garray,
-               external_verb_suffix_pattern=None):
+               external_suffix_pattern=None):
 
         unifier = Unifier()
         for token in word_list:
@@ -92,13 +131,16 @@ class Tokenizer():
             if garray[-3:] == [659, 212, 660]:
                 taglist += ["名"]
 
-            for suffix in default_verb_suffix_pattern:
-                if tuple(garray[-len(suffix):]) == suffix:
-                    taglist += ["动"]
-
+            for (tag, patterns) in default_suffix_pattern:
+                for ptrn in patterns:
+                    if tuple(garray[-len(ptrn):]) == ptrn:
+                        taglist += tag
+                        break
             if external_verb_suffix_pattern:
-                for suffix in external_verb_suffix_pattern:
-                    if tuple(garray[-len(suffix):]) == suffix:
-                        taglist += ["动"]
+                for (tag, patterns) in external_suffix_pattern:
+                    for ptrn in patterns:
+                        if tuple(garray[-len(ptrn):]) == ptrn:
+                            taglist += tag
+                            break
 
             yield (token, garray, list(set(taglist)))
