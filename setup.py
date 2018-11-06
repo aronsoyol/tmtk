@@ -5,7 +5,7 @@
 from setuptools import setup
 setup(
     name='tmtpk',
-    version='1.0.3',
+    version='1.0.4',
     description='Traditional Mongolian Text Processing Kit',
     author='Aronsoyol',
     author_email='aronsoyol@gmail.com',
