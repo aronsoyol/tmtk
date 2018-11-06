@@ -16,6 +16,8 @@ default_suffix_pattern = (
     (
         ("动"),
         (
+            # [ae]bel
+            (212, 350, 660),
             # l[ae]n
             (659, 212, 214),
             # rqu
