@@ -64,7 +64,10 @@ class Tokenizer():
             level2 += [item for item in level2_sub if item]
         return level2
 
-    def tagger(self, word_list, word2garray, verb_suffix_pattern=None):
+    def tagger(self,
+               word_list, word2garray,
+               external_verb_suffix_pattern=None):
+
         unifier = Unifier()
         for token in word_list:
             garray = word2garray.get(token, None)
@@ -89,14 +92,12 @@ class Tokenizer():
             if garray[-3:] == [659, 212, 660]:
                 taglist += ["名"]
 
-            if not verb_suffix_pattern:
-                verb_suffix_pattern = default_verb_suffix_pattern
-            try:
-                for suffix in verb_suffix_pattern:
-                    if tuple(garray[-len(suffix):]) == suffix:
-                        taglist += ["动"]
-            except Exception:
-                pass
+            for suffix in default_verb_suffix_pattern:
+                if tuple(garray[-len(suffix):]) == suffix:
+                    taglist += ["动"]
+
+            for suffix in external_verb_suffix_pattern:
+                if tuple(garray[-len(suffix):]) == suffix:
+                    taglist += ["动"]
+
             yield (token, garray, list(set(taglist)))
-
-
