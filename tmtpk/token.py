@@ -11,6 +11,28 @@ MONGOLIAN_CONTROL_CHAR = [chr(w) for w in range(
 MONGOLIAN_WORD_CHAR = [chr(a) for a in range(
     0x1820, 0x18ab)] + MONGOLIAN_CONTROL_CHAR
 
+default_verb_suffix_pattern = (
+    # gvljv
+    (489, 248, 659, 710, 250),
+    # gsan
+    (212, 212, 665, 212, 214),
+    # lagsan
+    (659, 212, 212, 212, 665, 212, 214),
+    # leegsen
+    (659, 212, 634, 212, 214),
+    # lehu
+    (659, 212, 523),
+    # lahv
+    (659, 212, 212, 250),
+    # gdehu
+    (637, 212, 523),
+    # dahv
+    (685, 212, 212, 212, 250),
+    # qiheged
+    (704, 239, 499, 499, 699),
+)
+
+
 class Tokenizer():
     __ptrn2 = re.compile("(\u202f[^\u202f ]+)")
     __ptrn1 = re.compile("([{0}]+)".format("".join(MONGOLIAN_WORD_CHAR)))
@@ -42,7 +64,7 @@ class Tokenizer():
             level2 += [item for item in level2_sub if item]
         return level2
 
-    def tagger(self, word_list, word2garray):
+    def tagger(self, word_list, word2garray, verb_suffix_pattern=None):
         unifier = Unifier()
         for token in word_list:
             garray = word2garray.get(token, None)
@@ -59,15 +81,22 @@ class Tokenizer():
 
             words = self.__dictionary.get(garray_str, None)
 
+            taglist = []
             if words:
-                taglist = []
                 for word in words:
                     taglist += word["pos"]
 
-                yield (token, garray, list(set(taglist)))
-            else:
-                if garray[-3:] == [659, 212, 660]:
-                    taglist = ["名"]
-                else:
-                    taglist = ["UNK"]
-                yield (token, garray, taglist)
+            if garray[-3:] == [659, 212, 660]:
+                taglist += ["名"]
+
+            if not verb_suffix_pattern:
+                verb_suffix_pattern = default_verb_suffix_pattern
+            try:
+                for suffix in verb_suffix_pattern:
+                    if tuple(garray[-len(suffix):]) == suffix:
+                        taglist += ["动"]
+            except Exception:
+                pass
+            yield (token, garray, list(set(taglist)))
+
+

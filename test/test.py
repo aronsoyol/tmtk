@@ -45,7 +45,8 @@ class TestTimu(unittest.TestCase):
             )
 
     def testTagger(self):
-        text = "ᠭᠠᠵᠠᠷ ᠤᠰᠤᠨ ‍ᠣ ᠪᠦᠷᠢᠳᠭᠡᠯ ᠬᠢᠵᠥ ᠤᠵᠵᠯᠠᠤᠠᠪᠤᠷᠵᠯᠠᠯ'"
+        with open("test/test_words.txt", "r") as file:
+            text = file.read()
 
         result = tokenizer.tokenize(
             text,
@@ -53,17 +54,14 @@ class TestTimu(unittest.TestCase):
             only_mongolian=True)
 
         word2garray = {}
-        result = [token for token in result if  token[0] not in ["\u202f", "\u200d"]]
+        result = [token for token in result if token[0] not in ["\u202f", "\u200d"]]
         for token in result:
             garray = unifier.get_uniq_gid_list(token)
             word2garray[token] = garray
-        print(word2garray)
+
 
         for tag in tokenizer.tagger(result, word2garray):
-            print("#"*50)
             print(tag)
-            print("#"*50)
-            print()
             pass
         
 
@@ -73,3 +71,9 @@ class TestTimu(unittest.TestCase):
             unifier.get_uniq_gid_list("ᠠᠷᠢᠭᠤᠨᠰᠤᠶᠤᠯ"),
             [209, 727, 239, 489, 248, 212, 665, 248, 719, 248, 660]
         )
+    
+    def test_3(self):
+        word = 'ᠪᠥᠬᠥᠢᠢᠯᠡ'
+        garray = unifier.get_uniq_gid_list(word)
+        print("="*100)
+        print(word, garray)
