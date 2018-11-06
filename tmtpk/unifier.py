@@ -8,6 +8,8 @@ mowu (Mongolian Word Unifier)
 
 import json
 import os
+import re
+
 from collections import defaultdict
 
 from .shaper import Shaper
@@ -42,7 +44,7 @@ def get_default_glyph_sub_table():
     return {
         213:  (212, 212),
         236:  (210, 239),
-        241:  (242, 242),
+        241:  (239, 239),
         246:  (210, 248),
         266:  (247, 250),
         270:  (210, 248, 239),
@@ -53,7 +55,7 @@ def get_default_glyph_sub_table():
 
 
 class Unifier():
-    
+
     __hash_to_id_dict = defaultdict(lambda: list())
     __gid_to_uniq_gid = dict()
 
@@ -138,7 +140,9 @@ class Unifier():
     def shape(self, text):
         return self.__shaper.shape(text)
 
-    def get_uniq_gid_list(self, word):
+    def get_uniq_gid_list(self, word, ii_to_i=True):
+        if ii_to_i:
+            word = re.sub("\u1822+", "\u1822", word)
         g_lst = self.shape(word)
         ls = []
         for g in g_lst:
