@@ -12,10 +12,9 @@ import re
 
 from collections import defaultdict
 
-from .shaper import Shaper
-
-import freetype
+from .shaper2 import Shaper2 as Shaper
 import gi
+import freetype
 import imagehash
 import numpy
 from gi.repository import GLib
@@ -143,10 +142,15 @@ class Unifier():
     def shape(self, text):
         return self.__shaper.shape(text)
 
-    def get_uniq_gid_list(self, word, ii_to_i=True):
+    def get_uniq_gid_list(self, word, ii_to_i=True, shaper=None):
         if ii_to_i:
             word = re.sub("\u1822+", "\u1822", word)
-        g_lst = self.shape(word)
+        g_lst = None
+        if not shaper:
+            g_lst = self.shape(word)
+        else:
+            g_lst = shaper.shape(word)
+
         ls = []
         for g in g_lst:
             if g in self.__gid_to_uniq_gid:

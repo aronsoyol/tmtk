@@ -1,12 +1,18 @@
 import unittest
 from tmtpk import Unifier
+
 from tmtpk import Tokenizer
+
+from tmtpk import Shaper2
+from tqdm import tqdm
+import json
+tqdm.monitor_interval = 0
 
 unifier = Unifier()
 tokenizer = Tokenizer()
 # from timu import timu
 
-unsusuten_list = [
+undusuten_list = [
     "ᠦᠨᠳ᠋ᠤᠰᠤᠳ᠋ᠡᠨ", "ᠦᠨᠳ᠋ᠦᠰᠣᠳ᠋ᠡᠨ", "ᠦᠨᠲᠤᠰᠤᠲᠠᠨ", "ᠥᠨᠳ᠋ᠣᠰᠣᠳ᠋ᠡᠨ", "ᠦᠨᠳ᠋ᠤᠰᠤᠳ᠋ᠠᠨ",
     "ᠥᠨᠳ᠋ᠥᠰᠥᠲᠡᠨ", "ᠦᠨᠳ᠋ᠤᠰᠣᠳ᠋ᠠᠨ", "ᠦᠨᠳ᠋ᠦᠰᠦᠳ᠋ᠠᠨ", "ᠦᠨᠳ᠋ᠣᠰᠣᠳ᠋ᠡᠨ", "ᠦᠨᠳᠤᠰᠦᠲᠡᠨ",
     "ᠦᠨᠳᠣᠰᠣᠳᠡᠨ", "ᠦᠡᠳᠦᠰᠤᠳᠡᠨ", "ᠦᠨᠳᠤᠰᠤᠲᠡᠨ", "ᠦᠡᠳᠦᠰᠦᠳᠡᠨ", "ᠥᠨᠳᠣᠰᠣᠳᠡᠨ",
@@ -17,6 +23,7 @@ unsusuten_list = [
     "ᠦᠨᠳᠦᠰᠦᠳᠡᠨ", "ᠦᠠᠳᠤᠰᠤᠳᠠᠨ", "ᠥᠡᠳᠦᠰᠦᠳᠡᠨ", "ᠦᠨᠳ᠋ᠦᠰᠦᠲᠡᠨ", "ᠦᠨᠳᠦᠰᠦᠳᠠᠨ",
     "ᠦᠨᠳ᠋ᠣᠰᠦᠳ᠋ᠡᠨ", "ᠦᠨᠳ᠋ᠦᠰᠦᠳ᠋ᠡᠨ", "ᠦᠨᠳᠦᠰᠦᠲᠡᠨ"
 ]
+shaper = Shaper2()
 
 
 class TestTimu(unittest.TestCase):
@@ -38,33 +45,51 @@ class TestTimu(unittest.TestCase):
 
     def test_one(self):
         # self.assertEqual(len(unsusuten_list), 40)
-        for unsusuten in unsusuten_list[1:]:
+        for undusuten in undusuten_list[1:]:
             self.assertEqual(
-                unifier.get_uniq_gid_list(unsusuten_list[0]),
-                unifier.get_uniq_gid_list(unsusuten),
+                unifier.get_uniq_gid_list(undusuten_list[0]),
+                unifier.get_uniq_gid_list(undusuten),
             )
 
-    def testTagger(self):
-        with open("test/test_words.txt", "r") as file:
-            text = file.read()
+    # def testShpaer1(self):
+    #     with open("test/test_words.txt", "r") as file:
+    #         result = [token for token in file if token[0]
+    #                   not in ["\u202f", "\u200d"]]
 
-        result = tokenizer.tokenize(
-            text,
-            split_suffix=True,
-            only_mongolian=True)
+    #     word2garray = {}
+        
+    #     for token in tqdm(result):
+    #         garray = unifier.get_uniq_gid_list(token)
+    #         word2garray[token] = garray
+
+    #     with open("test_resulr1.txt", "w") as file:
+    #         json.dump(word2garray, fp=file)
+
+    def testShpaer2(self):
+        with open("test/test_words.txt", "r") as file:
+            result = [token for token in file if token[0]
+                      not in ["\u202f", "\u200d"]]
 
         word2garray = {}
-        result = [token for token in result if token[0] not in ["\u202f", "\u200d"]]
-        for token in result:
-            garray = unifier.get_uniq_gid_list(token)
+
+        for token in tqdm(result):
+            garray = unifier.get_uniq_gid_list(token, shaper=shaper)
             word2garray[token] = garray
 
+        with open("test_resulr2.txt", "w") as file:
+            json.dump(word2garray, fp=file)
 
-        for tag in tokenizer.tagger(result, word2garray):
-            print(tag)
-            pass
-        
+    def testShpaer3(self):
+        with open("test/test_words.txt", "r") as file:
+            result = [token for token in file if token[0]
+                      not in ["\u202f", "\u200d"]]
 
+        word2garray = {}
+
+        for token in tqdm(result):
+            garray1 = unifier.get_uniq_gid_list(token.strip(), shaper=shaper)
+            garray2 = unifier.get_uniq_gid_list(token.strip())
+            self.assertEqual(garray1, garray2)
 
     def test_two(self):
         self.assertEqual(
@@ -77,3 +102,10 @@ class TestTimu(unittest.TestCase):
         garray = unifier.get_uniq_gid_list(word)
         print("="*100)
         print(word, garray)
+
+    def test_4(self):
+        word = 'ᠪᠥᠬᠥᠢᠢᠯᠡ'
+        
+        print("$"*100)
+        print(shaper.shape(word))
+        print("$"*100)
