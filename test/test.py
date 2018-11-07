@@ -3,7 +3,7 @@ import unittest
 
 from tqdm import tqdm
 
-from tmtk import shaper, tokenizer, unifier
+from tmtk import shaper, tokenizer, unifier, converter
 
 tqdm.monitor_interval = 0
 
@@ -77,3 +77,19 @@ class TestTimu(unittest.TestCase):
 
         self.assertTrue(garray1 == [370, 516, 239, 239, 659, 214])
         self.assertTrue(garray2 == [370, 519, 241, 239, 659, 226])
+
+    def test_unicode_convert(self):
+        menk_code = (
+            "\ue310\ue27e\ue320\ue291\ue28d\ue27a\ue2ab\ue27b"
+            "\ue310\ue291\ue28d \ue266\ue326\ue26c\ue2f9 \ue291"
+            "\ue2b5 \ue309\ue291\ue2d8\ue26c\ue27b \ue2a2\ue27e"
+            "\ue2f4\ue276\ue2eb\ue278\ue2b5")
+
+
+        uni_text = None
+        uni_text = converter.convert2unicode(menk_code)
+        print(uni_text)
+        self.assertIsNot(uni_text, None)
+        pass
+
+

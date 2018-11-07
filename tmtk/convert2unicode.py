@@ -46,7 +46,7 @@ class Converter():
             if not el.text:
                 return ""
             return el.text
-        except:
+        except Exception:
             return None
 
     def _input_text(self, text):
