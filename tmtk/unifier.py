@@ -13,14 +13,10 @@ import re
 from collections import defaultdict
 
 from .shaper2 import Shaper2 as Shaper
-import gi
 import freetype
 import imagehash
 import numpy
-from gi.repository import GLib
-gi.require_version('HarfBuzz', '0.0')
 
-from gi.repository import HarfBuzz as hb
 from PIL import Image
 from tqdm import tqdm
 
@@ -158,16 +154,15 @@ class Unifier():
                 ls.append(self.__gid_to_uniq_gid[g])
         return self.glyph_decompositoin(ls)
 
-
     # def unify_corpus(self):
-        
-
 
 
 def main():
     unifier = Unifier()
     data_set = []
-    with open("/Users/aron/dev/workspace/topic_model/qinggis_train_data_0.json", "r") as json_file_0:
+    with open("/Users/aron/dev/workspace/"
+              "topic_model/qinggis_train_data_0.json",
+              "r") as json_file_0:
         for line in json_file_0:
             data = json.loads(line.strip())
             data_set.append(data)

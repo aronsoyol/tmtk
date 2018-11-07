@@ -4,12 +4,12 @@
 # from distutils.core import setup
 from setuptools import setup
 setup(
-    name='tmtpk',
+    name='tmtk',
     version='1.0.4',
-    description='Traditional Mongolian Text Processing Kit',
+    description='Traditional Mongolian ToolKit',
     author='Aronsoyol',
     author_email='aronsoyol@gmail.com',
-    url='https://github.com/aronsoyol/tmtpk',
+    url='https://github.com/aronsoyol/tmtk.git',
     install_requires=[
         'freetype-py',
         'numpy',
