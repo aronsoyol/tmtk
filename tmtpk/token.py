@@ -159,7 +159,7 @@ default_suffix_pattern = (
             (212, 659, 212, 509)
 
         )
-    )(
+    ), (
         ("名"),
         (
             # [ae]mji
