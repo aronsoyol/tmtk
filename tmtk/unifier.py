@@ -5,7 +5,7 @@
 mowu (Mongolian Word Unifier)
 """
 
-
+import warnings
 import json
 import os
 import re
@@ -140,13 +140,15 @@ class Unifier():
         return self.__shaper.shape(text)
 
     def get_uniq_gid_list(self, word, ii_to_i=True, shaper=None):
+        warnings.warn("这个API已经不用了，请用get_garray", DeprecationWarning)
+        return self.get_garray(word, ii_to_i)
+
+    def get_garray(self, word, ii_to_i=True):
         if ii_to_i:
             word = re.sub("\u1822+", "\u1822", word)
         g_lst = None
-        if not shaper:
-            g_lst = self.shape(word)
-        else:
-            g_lst = shaper.shape(word)
+
+        g_lst = self.shape(word)
 
         ls = []
         for g in g_lst:

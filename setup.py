@@ -16,8 +16,10 @@ setup(
         'pillow',
         'imagehash',
         'pygobject'],
-    packages=['tmtpk'],
+    packages=['tmtk'],
     include_package_data=True,
-    package_data={'tmtpk': ['MongolianWhite3.ttf', 'dictionary_garray.jl']},
+    package_data={'tmtk': [
+        'MongolianWhite3.ttf',
+        'dictionary_garray.jl']},
     test_suite='test'
 )
