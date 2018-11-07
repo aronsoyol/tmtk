@@ -244,13 +244,16 @@ class Tokenizer():
         return level2
 
     def tagger(self,
-               word_list, word2garray,
+               word_list, word2garray=None,
                external_suffix_pattern=None):
 
         unifier = Unifier()
         for token in word_list:
-            garray = word2garray.get(token, None)
-            garray_str = ""
+            garray = None
+            garray_str = None
+            if word2garray:
+                garray = word2garray.get(token, None)
+                garray_str = ""
 
             if not garray:
                 garray = unifier.get_uniq_gid_list(token)
