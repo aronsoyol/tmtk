@@ -25,7 +25,7 @@ undusuten_list = [
 class TestTimu(unittest.TestCase):
     # def setUp(self):
 
-    def testTokenizer(self):
+    def test_Tokenizer(self):
         text = ('ᠰᠠᠷ\u180eᠠ aᠭᠠᠵᠠᠷ ᠤᠰᠤᠨ\u202fᠣasdfᠪᠦᠷᠢᠳᠭᠡᠯ好'
                 ' ᠬᠢᠵᠦ᠃ᠬᠢᠵᠦ ᠤᠰᠤᠨ\u202fᠣ\u202fᠣ\u202fᠣ')
 
@@ -49,7 +49,7 @@ class TestTimu(unittest.TestCase):
                 unifier.get_uniq_gid_list(undusuten),
             )
 
-    def testShpaer2(self):
+    def test_Shpaer2(self):
         with open("test/test_words.txt", "r") as file:
             result = [token for token in file if token[0]
                       not in ["\u202f", "\u200d"]]
@@ -85,11 +85,20 @@ class TestTimu(unittest.TestCase):
             "\ue2b5 \ue309\ue291\ue2d8\ue26c\ue27b \ue2a2\ue27e"
             "\ue2f4\ue276\ue2eb\ue278\ue2b5")
 
-
-        uni_text = None
         uni_text = converter.convert2unicode(menk_code)
-        print(uni_text)
+        # print(uni_text)
         self.assertIsNot(uni_text, None)
         pass
 
+    def test_tagger(self):
+        text = ("ᠠᠨᠢᠬᠤ ᠠᠨᠢᠭᠠᠨᠠᠬᠤ ᠠᠨᠢᠭᠠᠷ ᠠᠨᠢᠭᠠᠷᠬᠠᠨ ᠠᠨᠢᠭᠤᠬᠠᠢ ᠠᠨᠢᠭᠤᠯᠬᠤ "
+                "ᠠᠨᠢᠮᠠᠯ ᠠᠨᠢᠮᠠᠳᠠᠭᠠᠢ ᠠᠨᠢᠯᠢᠨ ᠠᠨᠢᠯᠬᠢᠯᠠᠬᠤ ᠠᠨᠢᠯᠳᠤᠬᠤ ᠠᠨᠢᠯᠵᠠᠬᠤ "
+                "ᠠᠨᠢᠯᠵᠠᠭᠤᠷ ᠠᠨᠢᠰᠤ ᠠᠨᠢᠶ᠎ᠡ ᠠᠨᠢᠶᠠᠬᠤ ᠠᠨᠢᠶᠠᠴᠢᠨ")
 
+        for token in tokenizer.tagger(text.split()):
+            # print(token)
+            pass
+
+
+if __name__ == '__main__':
+    unittest.main()

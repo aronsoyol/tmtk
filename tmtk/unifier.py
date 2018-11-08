@@ -12,7 +12,8 @@ import re
 
 from collections import defaultdict
 
-from .shaper2 import Shaper2 as Shaper
+from .shaper2 import shaper
+# from . import shaper
 import freetype
 import imagehash
 import numpy
@@ -54,6 +55,7 @@ class Unifier():
 
     __hash_to_id_dict = defaultdict(lambda: list())
     __gid_to_uniq_gid = dict()
+    __gid_2_hash = dict()
 
     def __init__(self, font_path=""):
         if not font_path:
@@ -72,7 +74,7 @@ class Unifier():
 
         self.__render_all_glyphs()
         self.__glyph_sub_table = get_default_glyph_sub_table()
-        self.__shaper = Shaper(self.__font_path)
+        self.__shaper = shaper
 
     def set_glyph_sub_table(self, table):
         self.__glyph_sub_table = table
@@ -106,17 +108,31 @@ class Unifier():
         return [hex(ord(w)) for w in word]
 
     def __render_all_glyphs(self):
-        hdict = {}
 
-        for n in range(self.__ft_face.num_glyphs):
-            img = self.draw_glyph(n)
+        # self.__glyph_hash_table = {}
+        gid_2_hash_file = "gid_2_hash.json"
+        this_dir, this_filename = os.path.split(__file__)
 
-            if img:
-                hs = str(imagehash.phash(img))
-                hdict[n] = hs
+        gid_2_hash_file_path = os.path.join(
+                this_dir,
+                gid_2_hash_file
+            )
 
-        for g_id, hs in hdict.items():
-            self.__hash_to_id_dict[hs].append(g_id)
+        if os.path.isfile(gid_2_hash_file_path):
+            with open(gid_2_hash_file_path, "r") as file:
+                self.__gid_2_hash = json.load(file)
+        else:
+            for n in range(self.__ft_face.num_glyphs):
+                img = self.draw_glyph(n)
+                if img:
+                    hs = str(imagehash.phash(img))
+                    self.__gid_2_hash[n] = hs
+
+            with open(gid_2_hash_file_path, "w") as file:
+                json.dump(self.__gid_2_hash, fp=file, indent=2)
+
+        for g_id, hs in self.__gid_2_hash.items():
+            self.__hash_to_id_dict[hs].append(int(g_id))
 
         for gls in self.__hash_to_id_dict.values():
             # 选择最小的ID进行统一

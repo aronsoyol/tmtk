@@ -20,6 +20,7 @@ setup(
     include_package_data=True,
     package_data={'tmtk': [
         'MongolianWhite3.ttf',
-        'dictionary_garray.jl']},
+        'dictionary_garray.jl',
+        'gid_2_hash.json']},
     test_suite='test'
 )

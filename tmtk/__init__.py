@@ -1,7 +1,7 @@
 
 # from .shaper import Shaper
 
-from .shaper2 import Shaper2
+from .shaper2 import shaper
 
 from .unifier import Unifier
 
@@ -11,5 +11,4 @@ from . convert2unicode import Converter
 
 unifier = Unifier()
 tokenizer = Tokenizer()
-shaper = Shaper2()
 converter = Converter()
