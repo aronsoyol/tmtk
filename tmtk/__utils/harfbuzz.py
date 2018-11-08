@@ -34,12 +34,12 @@ from weakref import \
     WeakValueDictionary
 import atexit
 try :
-    from . import freetype2__ as freetype
+    from . import freetype2 as freetype
 except ImportError :
     freetype = None
 #end try
 try :
-    from . import qahirah__ as qahirah
+    from . import qahirah as qahirah
 except ImportError :
     qahirah = None
 #end try

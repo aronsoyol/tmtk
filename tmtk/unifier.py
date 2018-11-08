@@ -12,7 +12,7 @@ import re
 
 from collections import defaultdict
 
-from .shaper2 import shaper
+from .shaper2 import Shaper2 as Shaper
 # from . import shaper
 import freetype
 import imagehash
@@ -74,7 +74,7 @@ class Unifier():
 
         self.__render_all_glyphs()
         self.__glyph_sub_table = get_default_glyph_sub_table()
-        self.__shaper = shaper
+        self.__shaper = Shaper()
 
     def set_glyph_sub_table(self, table):
         self.__glyph_sub_table = table
@@ -175,8 +175,11 @@ class Unifier():
     # def unify_corpus(self):
 
 
+unifier = Unifier()
+
+
 def main():
-    unifier = Unifier()
+
     data_set = []
     with open("/Users/aron/dev/workspace/"
               "topic_model/qinggis_train_data_0.json",

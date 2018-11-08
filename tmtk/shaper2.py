@@ -1,6 +1,6 @@
-from . import harfbuzz as hb
-from .harfbuzz import HARFBUZZ as HB
-from . import qahirah__ as qah
+from .__utils import harfbuzz as hb
+from .__utils.harfbuzz import HARFBUZZ as HB
+from .__utils import qahirah as qah
 import os
 
 ft = qah.get_ft_lib()
@@ -45,6 +45,3 @@ class Shaper2():
 # ft_face = ft.find_face(font_family)
 # ft_face.set_char_size(size=text_size, resolution=qah.base_dpi)
 # hb_font = hb.Font.ft_create(ft_face)
-
-
-shaper = Shaper2()

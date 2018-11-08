@@ -3,7 +3,16 @@ import unittest
 
 from tqdm import tqdm
 
-from tmtk import shaper, tokenizer, unifier, converter
+# from tmtk import uifier
+from tmtk.unifier import Unifier
+from tmtk.converter import Converter
+from tmtk.token import Tokenizer
+from tmtk.shaper2 import Shaper2 as Shaper
+
+unifier = Unifier()
+converter = Converter()
+tokenizer = Tokenizer()
+shaper = Shaper()
 
 tqdm.monitor_interval = 0
 

@@ -76,3 +76,6 @@ class Converter():
             text = self._get_text()
             count += 1
         return text
+
+
+converter = Converter()

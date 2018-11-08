@@ -35,7 +35,7 @@ except ImportError :
     fontconfig = None
 #end try
 try :
-    from . import freetype2__ as freetype2
+    from . import freetype2
       # my FreeType wrapper, get from <https://github.com/ldo/python_freetype>
 except ImportError :
     freetype2 = None
