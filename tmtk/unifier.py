@@ -19,7 +19,6 @@ import imagehash
 import numpy
 
 from PIL import Image
-from tqdm import tqdm
 
 
 MONGOLIAN_PUNCTUATIONS = [chr(w) for w in range(0x1800, 0x180a)]
@@ -176,30 +175,6 @@ class Unifier():
 
 
 unifier = Unifier()
-
-
-def main():
-
-    data_set = []
-    with open("/Users/aron/dev/workspace/"
-              "topic_model/qinggis_train_data_0.json",
-              "r") as json_file_0:
-        for line in json_file_0:
-            data = json.loads(line.strip())
-            data_set.append(data)
-
-    token_set = set()
-
-    gid_to_word = defaultdict(lambda: list())
-    for data in tqdm(data_set):
-        for token in data["token"]:
-            # gid_list = unifier.get_uniq_gid_list(token)
-            token_set.add(token)
-            # gid_to_word[json.dumps(gid_list)] += token
-
-    for token in tqdm(token_set):
-        gid_list = unifier.get_uniq_gid_list(token)
-        gid_to_word[json.dumps(gid_list)].append(token)
 
 
 class Uniqode():
