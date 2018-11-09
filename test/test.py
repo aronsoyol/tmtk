@@ -4,7 +4,7 @@ import unittest
 from tqdm import tqdm
 
 # from tmtk import uifier
-from tmtk.unifier import Unifier
+from tmtk.unifier import Unifier, Uniqode
 from tmtk.converter import Converter
 from tmtk.token import Tokenizer
 from tmtk.shaper2 import Shaper2 as Shaper
@@ -107,6 +107,10 @@ class TestTimu(unittest.TestCase):
         for token in tokenizer.tagger(text.split()):
             # print(token)
             pass
+
+    def test_uniqode(self):
+        for word in undusuten_list:
+            self.assertEqual(Uniqode("ᠦᠨᠳᠦᠰᠦᠲᠡᠨ"), Uniqode(word))
 
 
 if __name__ == '__main__':

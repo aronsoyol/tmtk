@@ -202,5 +202,18 @@ def main():
         gid_to_word[json.dumps(gid_list)].append(token)
 
 
-if __name__ == '__main__':
-    main()
+class Uniqode():
+    __word = ""
+
+    def __init__(self, word):
+        self.__word = word
+        self.__garray = unifier.get_garray(word)
+
+    def __hash__(self):
+        return hash(str(self.__garray))
+
+    def __eq__(self, other):
+        return self.__garray == other.__garray
+
+    def __str__(self):
+        return str(self.__garray)
