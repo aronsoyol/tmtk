@@ -35,7 +35,7 @@ except NameError:
     unicode = str
 
 
-def get_default_glyph_sub_table():
+def get_default_glyph_decompositoin_table():
     return {
         213:  (212, 212),
         236:  (210, 239),
@@ -72,14 +72,14 @@ class Unifier():
         self.__ft_face.set_char_size(48 * 64)
 
         self.__render_all_glyphs()
-        self.__glyph_sub_table = get_default_glyph_sub_table()
+        self.__glyph_decompositoin_table = get_default_glyph_decompositoin_table()
         self.__shaper = Shaper()
 
-    def set_glyph_sub_table(self, table):
-        self.__glyph_sub_table = table
+    def set_glyph_decompositoin_table(self, table):
+        self.__glyph_decompositoin_table = table
 
-    def get_glyph_sub_table(self):
-        return get_default_glyph_sub_table()
+    def get_glyph_decompositoin_table(self):
+        return get_default_glyph_decompositoin_table()
 
     def __get_font_path(self):
         return self.__font_path
@@ -91,7 +91,8 @@ class Unifier():
         if len(bitmap.buffer) == 0:
             return None
 
-        arr = numpy.array([255 - dot for dot in bitmap.buffer]
+        arr = numpy.array(
+            [255 - dot for dot in bitmap.buffer]
                           ).reshape((bitmap.rows, bitmap.width))
         return arr
 
@@ -142,8 +143,8 @@ class Unifier():
     def glyph_decompositoin(self, g_lst):
         ls = []
         for g in g_lst:
-            if g in self.__glyph_sub_table:
-                ls.extend(self.__glyph_sub_table[g])
+            if g in self.__glyph_decompositoin_table:
+                ls.extend(self.__glyph_decompositoin_table[g])
             else:
                 ls.append(g)
         return ls
