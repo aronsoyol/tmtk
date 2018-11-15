@@ -1,7 +1,7 @@
 import re
 import os
 import json
-from .unifier import Unifier
+from .__unifier import Unifier
 
 
 MONGOLIAN_PUNCTUATIONS = [chr(w) for w in range(0x1800, 0x180a)]
@@ -256,7 +256,7 @@ class Tokenizer():
                 garray_str = ""
 
             if not garray:
-                garray = unifier.get_uniq_gid_list(token)
+                garray = unifier.get_garray(token)
 
             if isinstance(garray, list):
                 garray_str = json.dumps(garray)
