@@ -4,15 +4,12 @@ import unittest
 from tqdm import tqdm
 
 # from tmtk import uifier
-from tmtk.unifier import Unifier, Uniqode
-from tmtk.converter import Converter
-from tmtk.token import Tokenizer
-from tmtk.shaper2 import Shaper2 as Shaper
-
-unifier = Unifier()
-converter = Converter()
-tokenizer = Tokenizer()
-shaper = Shaper()
+import tmtk
+from tmtk import Uniqode
+from tmtk import unifier
+# from tmtk.converter import Converter
+from tmtk import tokenizer
+from tmtk import shaper
 
 tqdm.monitor_interval = 0
 
@@ -54,8 +51,8 @@ class TestTimu(unittest.TestCase):
         # self.assertEqual(len(unsusuten_list), 40)
         for undusuten in undusuten_list[1:]:
             self.assertEqual(
-                unifier.get_uniq_gid_list(undusuten_list[0]),
-                unifier.get_uniq_gid_list(undusuten),
+                unifier.get_garray(undusuten_list[0]),
+                unifier.get_garray(undusuten),
             )
 
     def test_Shpaer2(self):
@@ -66,7 +63,7 @@ class TestTimu(unittest.TestCase):
         word2garray = {}
 
         for token in result:
-            garray = unifier.get_uniq_gid_list(token)
+            garray = unifier.get_garray(token)
             word2garray[token] = garray
 
         with open("test_resulr2.txt", "w") as file:
@@ -75,29 +72,29 @@ class TestTimu(unittest.TestCase):
 
     def test_two(self):
         self.assertEqual(
-            unifier.get_uniq_gid_list("ᠠᠷᠢᠭᠤᠨᠰᠤᠶᠤᠯ"),
+            unifier.get_garray("ᠠᠷᠢᠭᠤᠨᠰᠤᠶᠤᠯ"),
             [209, 727, 239, 489, 248, 212, 665, 248, 719, 248, 660]
         )
 
     def test_3(self):
         word = 'ᠪᠥᠬᠥᠢᠢᠯᠡ'
-        garray1 = unifier.get_uniq_gid_list(word)
+        garray1 = unifier.get_garray(word)
         garray2 = shaper.shape(word)
 
         self.assertTrue(garray1 == [370, 516, 239, 239, 659, 214])
         self.assertTrue(garray2 == [370, 519, 241, 239, 659, 226])
 
-    def test_unicode_convert(self):
-        menk_code = (
-            "\ue310\ue27e\ue320\ue291\ue28d\ue27a\ue2ab\ue27b"
-            "\ue310\ue291\ue28d \ue266\ue326\ue26c\ue2f9 \ue291"
-            "\ue2b5 \ue309\ue291\ue2d8\ue26c\ue27b \ue2a2\ue27e"
-            "\ue2f4\ue276\ue2eb\ue278\ue2b5")
+    # def test_unicode_convert(self):
+    #     menk_code = (
+    #         "\ue310\ue27e\ue320\ue291\ue28d\ue27a\ue2ab\ue27b"
+    #         "\ue310\ue291\ue28d \ue266\ue326\ue26c\ue2f9 \ue291"
+    #         "\ue2b5 \ue309\ue291\ue2d8\ue26c\ue27b \ue2a2\ue27e"
+    #         "\ue2f4\ue276\ue2eb\ue278\ue2b5")
 
-        uni_text = converter.convert2unicode(menk_code)
-        # print(uni_text)
-        self.assertIsNot(uni_text, None)
-        pass
+    #     uni_text = converter.convert2unicode(menk_code)
+    #     # print(uni_text)
+    #     self.assertIsNot(uni_text, None)
+    #     pass
 
     def test_tagger(self):
         text = ("ᠠᠨᠢᠬᠤ ᠠᠨᠢᠭᠠᠨᠠᠬᠤ ᠠᠨᠢᠭᠠᠷ ᠠᠨᠢᠭᠠᠷᠬᠠᠨ ᠠᠨᠢᠭᠤᠬᠠᠢ ᠠᠨᠢᠭᠤᠯᠬᠤ "
@@ -111,6 +108,16 @@ class TestTimu(unittest.TestCase):
     def test_uniqode(self):
         for word in undusuten_list:
             self.assertEqual(Uniqode("ᠦᠨᠳᠦᠰᠦᠲᠡᠨ"), Uniqode(word))
+
+    def test_converter2(self):
+        menk_code = (
+            "\ue310\ue27e\ue320\ue291\ue28d\ue27a\ue2ab\ue27b"
+            "\ue310\ue291\ue28d \ue266\ue326\ue26c\ue2f9 \ue291"
+            "\ue2b5 \ue309\ue291\ue2d8\ue26c\ue27b \ue2a2\ue27e"
+            "\ue2f4\ue276\ue2eb\ue278\ue2b5")
+
+        uni_text = tmtk.convert2unicode(menk_code)
+        self.assertIsNot(uni_text, None)
 
 
 if __name__ == '__main__':
