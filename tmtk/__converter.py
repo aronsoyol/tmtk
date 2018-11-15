@@ -6,7 +6,7 @@ session = requests.Session()
 
 res = session.get("http://mtg.mglip.com/")
 
-soup = bs4.BeautifulSoup(res.content, "lxml")
+soup = bs4.BeautifulSoup(res.content, "html.parser")
 
 form = soup.select("form")
 form = form[0]
@@ -26,7 +26,7 @@ def convert2unicode(text):
     __post_data.update({"inputCyrillic_ID": text, })
     res1 = session.post('http://mtg.mglip.com/', data=__post_data)
 
-    soup = bs4.BeautifulSoup(res1.content, "lxml")
+    soup = bs4.BeautifulSoup(res1.content, "html.parser")
     outPutTraditonalM_ID = soup.select("#outPutTraditonalM_ID")
 
     return outPutTraditonalM_ID[0].text.strip("\r\n")
