@@ -5,7 +5,7 @@
 from setuptools import setup
 setup(
     name='tmtk',
-    version='1.0.5',
+    version='1.0.6',
     description='Traditional Mongolian ToolKit',
     author='Aronsoyol',
     author_email='aronsoyol@gmail.com',
