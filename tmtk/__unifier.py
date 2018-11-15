@@ -12,7 +12,7 @@ import re
 
 from collections import defaultdict
 
-from .shaper2 import Shaper2 as Shaper
+from .__shaper2 import Shaper2 as Shaper
 # from . import shaper
 import freetype
 import imagehash
@@ -72,7 +72,8 @@ class Unifier():
         self.__ft_face.set_char_size(48 * 64)
 
         self.__render_all_glyphs()
-        self.__glyph_decompositoin_table = get_default_glyph_decompositoin_table()
+        self.__glyph_decompositoin_table = \
+            get_default_glyph_decompositoin_table()
         self.__shaper = Shaper()
 
     def set_glyph_decompositoin_table(self, table):
@@ -155,10 +156,6 @@ class Unifier():
     def shape(self, text):
         return self.__shaper.shape(text)
 
-    def get_uniq_gid_list(self, word, ii_to_i=True, shaper=None):
-        warnings.warn("这个API已经不用了，请用get_garray", DeprecationWarning)
-        return self.get_garray(word, ii_to_i)
-
     def get_garray(self, word, ii_to_i=True):
         if ii_to_i:
             word = re.sub("\u1822+", "\u1822", word)
@@ -174,22 +171,3 @@ class Unifier():
 
     # def unify_corpus(self):
 
-
-unifier = Unifier()
-
-
-class Uniqode():
-    __word = ""
-
-    def __init__(self, word):
-        self.__word = word
-        self.__garray = unifier.get_garray(word)
-
-    def __hash__(self):
-        return hash(str(self.__garray))
-
-    def __eq__(self, other):
-        return self.__garray == other.__garray
-
-    def __str__(self):
-        return str(self.__garray)
