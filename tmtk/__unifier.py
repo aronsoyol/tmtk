@@ -61,7 +61,7 @@ class Unifier():
             this_dir, this_filename = os.path.split(__file__)
             self.__font_path = os.path.join(
                 this_dir,
-                "MongolianWhite3.ttf"
+                "MongolianWhite.ttf"
             )
         else:
             self.__font_path = font_path

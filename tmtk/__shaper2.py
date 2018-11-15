@@ -9,7 +9,7 @@ this_dir, this_filename = os.path.split(__file__)
 
 font_path = os.path.join(
     this_dir,
-    "MongolianWhite3.ttf"
+    "MongolianWhite.ttf"
 )
 
 # ft_face = ft.new_face(font_path)
