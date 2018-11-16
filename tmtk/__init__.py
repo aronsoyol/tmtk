@@ -18,9 +18,26 @@ shaper = Shaper2()
 class Uniqode():
     __word = ""
 
-    def __init__(self, word):
-        self.__word = word
-        self.__garray = unifier.get_garray(word)
+    # python 没有函数重载的原因：
+    # python函数灵活的参数传递方式已经不要重载了
+    def __init__(self, word=None, garray=None):
+        """[使用一种方式初始化]
+
+        Keyword Arguments:
+            word {[str]} -- [使用单词] (default: {None})
+            garray {[list]} -- [使用garray] (default: {None})
+
+        Raises:
+            Exception -- [garray可能使用了str类型，必须使用list类型]
+        """
+
+        if word:
+            self.__garray = unifier.get_garray(word)
+        elif garray:
+            if isinstance(garray, list):
+                self.__garray = garray
+            else:
+                raise Exception("garray is not list")
 
     def __hash__(self):
         return hash(str(self.__garray))
