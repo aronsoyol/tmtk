@@ -17,11 +17,11 @@ shaper = Shaper2()
 def convert2unicode(text_m, converter="aronnote"):
 
     if converter == "aronnote":
-        from .__converter import convert2unicode_imu
-        return convert2unicode_imu(text_m)
-    else:
         from .__converter2 import convert2unicode_aron
         return convert2unicode_aron(text_m)
+    else:
+        from .__converter import convert2unicode_imu
+        return convert2unicode_imu(text_m)
 
 
 class Uniqode():
