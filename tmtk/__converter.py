@@ -22,7 +22,7 @@ __post_data = {
 }
 
 
-def convert2unicode(text):
+def convert2unicode_imu(text):
     __post_data.update({"inputCyrillic_ID": text, })
     res1 = session.post('http://mtg.mglip.com/', data=__post_data)
 

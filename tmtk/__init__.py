@@ -3,7 +3,6 @@
 
 from .__shaper2 import Shaper2
 
-from .__converter import convert2unicode
 from .__unifier import Unifier
 
 from .__token import Tokenizer
@@ -13,6 +12,17 @@ from .__token import Tokenizer
 unifier = Unifier()
 tokenizer = Tokenizer()
 shaper = Shaper2()
+
+
+def convert2unicode(text_m, converter="aronnote"):
+
+    if converter == "aronnote":
+        from .__converter import convert2unicode_imu
+        print("$"*100)
+        return convert2unicode_imu(text_m)
+    else:
+        from .__converter2 import convert2unicode_aron
+        return convert2unicode_aron(text_m)
 
 
 class Uniqode():
