@@ -38,7 +38,7 @@ convert_rules = (
     (1, (0, 0x0020), (0,), (1, 0xE235, 0xE239), (0,), 0,),
     (2, (0, 0x0020), (0,), (1, 0xE24E, 0xE252), (0,), 0,),
     (3, (0, 0x0020), (0,), (0, 0xE254, 0xE256, 0xE258, 0xE25A, 0xE25C, 0xE269, 0xE26A, 0xE26B, 0xE274, 0xE275), (0,), 0,),
-    (4, (0, 0x0020), (0,), (0, 0xE289, 0xE28A, 0xE291, 0xE292, 0xE29E, 0xE29F, 0xE2AB, 0xE2AC, 0xE285, 0xE28D, 0xE296, 0xE2A3), (0x202F,), 0,),
+    (4, (0, 0x0020), (0,), (0, 0xE285, 0xE28D, 0xE289, 0xE28A, 0xE291, 0xE292, 0xE296, 0xE29E, 0xE29F, 0xE2A3, 0xE2AB, 0xE2AC), (0x202F,), 0,),
     (5, (0, 0xE234), (0,), (0,), (0x1800,), 0,),
     (6, (0, 0xE235), (0,), (0,), (0x1801,), 0,),
     (7, (0, 0xE236), (0,), (0,), (0x1802, 0x0020), 0,),
@@ -88,8 +88,8 @@ convert_rules = (
     (51, (0, 0xE263), (0,), (0,  0xE235, 0xE239), (0,), 0,),
     (52, (0, 0xE263), (0,), (0,  0xE24E, 0xE252), (0,), 0,),
     (53, (0, 0xE263), (0,), (0,  0xE254, 0xE256, 0xE258, 0xE25A, 0xE25C, 0xE269, 0xE26A, 0xE26B, 0xE274, 0xE275), (0,), 0,),
-    (54, (0, 0xE263), (0,), (0,  0xE289, 0xE28A, 0xE291, 0xE292, 0xE29E, 0xE29F, 0xE2AB, 0xE2AC, 0xE285, 0xE28D, 0xE296, 0xE2A3), (0x202F,), 0,),
-    (55, (0, 0xE263), (0,), (0,), (0x0020,), 0,),
+    (54, (0, 0xE263), (0,), (0,  0xE289, 0xE28A, 0xE291, 0xE292, 0xE29E, 0xE29F, 0xE2AB, 0xE2AC, 0xE285, 0xE28D, 0xE296, 0xE2A3, 0xE321), (0x202F,), 0,),
+#     (55, (0, 0xE263), (0,), (0,), (0x0020,), 0,),
     (56, (0, 0xE264), (0,), (0,), (0x1820,), 0,),
     (57, (0, 0xE265), (0,), (0,), (0x1820, 0x180B), 0,),
     (58, (0, 0xE266), (0,), (0,), (0x1820,), 0,),
@@ -122,7 +122,7 @@ convert_rules = (
     (85, (0, 0xE27E), (0,), (0,), (0x1822,), 0,),
     (86, (1, 0xE27F, 0xE282), (0,), (0,), (0x1822,), 0,),
     (87, (1, 0xE283, 0xE284), (0,), (0,), (0x1823,), 0,),
-    (88, (0, 0xE285), (0, 0xE263, 0x0020), (0,), (0x1824,), 0,),
+    (88, (0, 0xE285), (0, 0xE263, 0x0020), (0,), (0x1824, 0x180B), 0,),
     (89, (0, 0xE285), (0,), (0,), (0x1823,), 0,),
     (90, (0, 0xE286), (0,), MENK_CODE, (0x1823,), 0,),
     (91, (0, 0xE286), (0,), (0,), (0x1823, 0x180B), 0,),
@@ -132,6 +132,7 @@ convert_rules = (
     (95, (0, 0xE289), (0,), (0, 0xE26C, 0xE276), (0x1833,), 1,),
     (96, (0, 0xE289), (0,), (0,), (0x1823,), 0,),
     (97, (0, 0xE28A), (0,), (0,), (0x1823,), 0,),
+    (98, (0, 0xE28D), (0,0x0020), (0, 0x0020), (0x1824, 0x180B), 0,),
     (98, (1, 0xE28B, 0xE28F), (0,), (0,), (0x1824,), 0,),
     (99, (0, 0xE290), (0,), (0,), (0x1824, 0x180B), 0,),
     (100, (0, 0xE291), (0,), (0, 0xE26C, 0xE276), (0x1833,), 1,),
@@ -139,6 +140,7 @@ convert_rules = (
     (102, (0, 0xE292), (0,), (0,), (0x1824,), 0,),
     (103, (0, 0xE293), (0,), (0,), (0x1825,), 0,),
     (104, (0, 0xE294), (0,), (0,), (0x1825, 0x180B), 0,),
+    (104, (0, 0xE296), (0,0x0020), (0, 0x0020), (0x1825, 0x180B), 0,),
     (105, (1, 0xE295, 0xE29A), (0,), (0,), (0x1825,), 0,),
     (106, (0, 0xE29B), (0,), (0,), (0x1825, 0x180C), 0,),
     (107, (1, 0xE29C, 0xE29F), (0,), (0,), (0x1825,), 0,),
@@ -163,7 +165,7 @@ convert_rules = (
     (126, (1, 0xE2D0, 0xE2D7), (0,), (0,), (0x182C,), 0,),
     (127, (0, 0xE2D8), (0,), (0, 0xE26C, 0xE26D, 0xE26F, 0xE276, 0xE277, 0xE278, 0xE285, 0xE286, 0xE287, 0xE289, 0xE28D, 0xE28E, 0xE28F, 0xE291, 0xE292), (0x182C,), 0,),
     (128, (0, 0xE2D8), (0,), (0,), (0x182D,), 0,),
-    (129, (1, 0xE2D9, 0xE2DB), (0,), (0,), (0x182C,), 0,),
+    (129, (1, 0xE2D9, 0xE2DB), (0,), (0x182D,), 0,),
     (130, (0, 0xE2DC), (0,), (0, 0xE26C, 0xE26D, 0xE26F, 0xE276, 0xE277, 0xE278, 0xE285, 0xE286, 0xE287, 0xE289, 0xE28D, 0xE28E, 0xE28F, 0xE291, 0xE292), (0x182C,), 0,),
     (131, (0, 0xE2DC), (0,), (0,), (0x182D,), 0,),
     (132, (1, 0xE2DD, 0xE2E0), (0,), (0,), (0x182C,), 0,),
@@ -190,6 +192,7 @@ convert_rules = (
     (153, (0, 0xE314), (0,), (0,), (0x1833,), 0,),
     (154, (1, 0xE315, 0xE317), (0,), (0,), (0x1834,), 0,),
     (155, (1, 0xE318, 0xE31D), (0,), (0,), (0x1835,), 0,),
+    (156, (1, 0xE31E, 0xE321), (0,), (0, 0xe27e), (0x1836, 0x180B), 0,),
     (156, (1, 0xE31E, 0xE321), (0,), (0,), (0x1836,), 0,),
     (157, (1, 0xE322, 0xE328), (0,), (0,), (0x1837,), 0,),
     (158, (1, 0xE329, 0xE32B), (0,), (0,), (0x1838,), 0,),
@@ -259,17 +262,17 @@ def compile_rules():
         if current_code_range[0] == 0:
             # 当前字符离散
             for ch in current_code_range[1:]:
-                ch_repl_dict[chr(ch)].append([priority, ptrn, repl])
+                ch_repl_dict[chr(ch)].append([priority, ptrn, repl, item[5]])
 
         else:
             # 当前字符连续
             for ch in range(current_code_range[1], current_code_range[2]+1):
-                ch_repl_dict[chr(ch)].append([priority, ptrn, repl])
+                ch_repl_dict[chr(ch)].append([priority, ptrn, repl, item[5]])
 
     ch_repl_dict2 = defaultdict(lambda: list())
     for k, v in ch_repl_dict.items():
         ch_repl_dict2[k] = [
-            (re.compile(ptrn), repl) for (_, ptrn, repl) in sorted(v, key=lambda x: x[0])
+            (re.compile(ptrn), repl, look_ahead) for (_, ptrn, repl, look_ahead) in sorted(v, key=lambda x: x[0])
         ]
     return ch_repl_dict2
 
@@ -288,21 +291,28 @@ replace_rule_dict = compile_rules()
 def convert2unicode_aron(text_m):
     text_u = []
     text_m = "_%s_" % (text_m)
+    last_look_ahead = 0
     error_list = []
     for i in range(1, len(text_m)-1):
+        if last_look_ahead:
+            last_look_ahead = 0
+            continue
+#         print(i)
         sub_text = text_m[max(0, i-1): min(len(text_m), i+2)]
-        for (ptrn, repl) in replace_rule_dict[sub_text[1]]:
+        for (ptrn, repl, look_ahead) in replace_rule_dict[sub_text[1]]:
             # print("&"*10)
-            # pp1 = (ptrn, repl)
+            pp1 = (ptrn, repl)
             # print(ptrn)
             m = ptrn.match(sub_text)
             if m and repl:
-                # print(repl)
+#                 print(repl)
                 text_u += repl
+                last_look_ahead = look_ahead
                 break
             else:
                 pass
         else:
+            print(" adf")
             text_u += sub_text[1]
             if sub_text[1] != " ":
                 error_list += sub_text[1]
