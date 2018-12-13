@@ -122,6 +122,7 @@ convert_rules = (
     (83, (0, 0xE27D), (0,), (0,), (0x1822, 0x180B), 0,),
     (84, (0, 0xE27E), (0,), (0, 0xE27E), (0x1822,), 1,),
     (85, (0, 0xE27E), (0,), (0,), (0x1822,), 0,),
+    (86, (0, 0xE282), (0, 0x0020), (0, 0x0020), (0x202f, 0x1822, 0x180B), 1,),
     (86, (1, 0xE27F, 0xE282), (0,), (0,), (0x1822,), 0,),
     (87, (1, 0xE283, 0xE284), (0,), (0,), (0x1823,), 0,),
     (88, (0, 0xE285), (0, 0xE263, 0x0020), (0,), (0x1824, 0x180B), 1,),
@@ -327,7 +328,10 @@ def convert2unicode_aron(text_m):
 
 
 if __name__ == '__main__':
-    print([hex(ord(ch)) for ch in ""])
-    s, e = __convert2unicode_aron("")
-    print(s)
+    text_m = '  '
+    print([hex(ord(ch)) for ch in text_m])
+    text_u, e = __convert2unicode_aron(text_m)
+    print([hex(ord(ch)) for ch in text_u])
+
+    print(text_u)
     print(e)
