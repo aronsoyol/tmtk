@@ -213,7 +213,7 @@ convert_rules = (
 
 def compile_coderange(coderange):
     """
-    将代码范围转换成用正则表
+    将代码范围转换成用正则表达式
     """
     assert coderange[0] in [0, 1]
 
@@ -312,7 +312,6 @@ def convert2unicode_aron(text_m):
             else:
                 pass
         else:
-            print(" adf")
             text_u += sub_text[1]
             if sub_text[1] != " ":
                 error_list += sub_text[1]
