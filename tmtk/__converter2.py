@@ -27,6 +27,8 @@ convert_rule 格式
 
 使用以下规则表动态生成正则表达式
 """
+
+#%%
 from collections import defaultdict
 
 import re
@@ -89,7 +91,7 @@ convert_rules = (
     (52, (0, 0xE263), (0,), (0,  0xE24E, 0xE252), (0,), 0,),
     (53, (0, 0xE263), (0,), (0,  0xE254, 0xE256, 0xE258, 0xE25A, 0xE25C, 0xE269, 0xE26A, 0xE26B, 0xE274, 0xE275), (0,), 0,),
     (54, (0, 0xE263), (0,), (0,  0xE289, 0xE28A, 0xE291, 0xE292, 0xE29E, 0xE29F, 0xE2AB, 0xE2AC, 0xE285, 0xE28D, 0xE296, 0xE2A3, 0xE321), (0x202F,), 0,),
-#     (55, (0, 0xE263), (0,), (0,), (0x0020,), 0,),
+    (55, (0, 0xE263), (0,), (0,), (0x202F,), 0,),
     (56, (0, 0xE264), (0,), (0,), (0x1820,), 0,),
     (57, (0, 0xE265), (0,), (0,), (0x1820, 0x180B), 0,),
     (58, (0, 0xE266), (0,), (0,), (0x1820,), 0,),
@@ -122,13 +124,13 @@ convert_rules = (
     (85, (0, 0xE27E), (0,), (0,), (0x1822,), 0,),
     (86, (1, 0xE27F, 0xE282), (0,), (0,), (0x1822,), 0,),
     (87, (1, 0xE283, 0xE284), (0,), (0,), (0x1823,), 0,),
-    (88, (0, 0xE285), (0, 0xE263, 0x0020), (0,), (0x1824, 0x180B), 0,),
+    (88, (0, 0xE285), (0, 0xE263, 0x0020), (0,), (0x1824, 0x180B), 1,),
     (89, (0, 0xE285), (0,), (0,), (0x1823,), 0,),
     (90, (0, 0xE286), (0,), MENK_CODE, (0x1823,), 0,),
     (91, (0, 0xE286), (0,), (0,), (0x1823, 0x180B), 0,),
     (92, (0, 0xE287), (0,), (0,), (0x1823,), 0,),
     (93, (0, 0xE288), (0,), (0,), (0x1823, 0x180B), 0,),
-    (94, (0, 0xE289), (0, 0xE263, 0x0020), (0,), (0x1824,), 0,),
+    (94, (0, 0xE289), (0, 0xE263, 0x0020), (0,), (0x1824,), 1,),
     (95, (0, 0xE289), (0,), (0, 0xE26C, 0xE276), (0x1833,), 1,),
     (96, (0, 0xE289), (0,), (0,), (0x1823,), 0,),
     (97, (0, 0xE28A), (0,), (0,), (0x1823,), 0,),
@@ -211,6 +213,7 @@ convert_rules = (
 )
 
 
+#%%
 def compile_coderange(coderange):
     """
     将代码范围转换成用正则表达式
@@ -288,7 +291,7 @@ replace_rule_dict = compile_rules()
 #         print("repl:", repl)
 
 
-def convert2unicode_aron(text_m):
+def __convert2unicode_aron(text_m):
     text_u = []
     text_m = "_%s_" % (text_m)
     last_look_ahead = 0
@@ -315,6 +318,16 @@ def convert2unicode_aron(text_m):
             text_u += sub_text[1]
             if sub_text[1] != " ":
                 error_list += sub_text[1]
-    return "".join(text_u)
+    return "".join(text_u), error_list
 
 
+def convert2unicode_aron(text_m):
+    text_u, _ = __convert2unicode_aron(text_m)
+    return text_u
+
+
+if __name__ == '__main__':
+    print([hex(ord(ch)) for ch in ""])
+    s, e = __convert2unicode_aron("")
+    print(s)
+    print(e)
