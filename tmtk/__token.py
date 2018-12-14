@@ -225,6 +225,8 @@ class Tokenizer():
             this_dir,
             "dictionary_garray.jl"
         )
+        self.__unifier = Unifier()
+
         with open(dictionary_path, "r") as file:
             for line in file:
                 item = json.loads(line)
@@ -250,7 +252,6 @@ class Tokenizer():
                match_suffix_pattern=True,
                external_suffix_pattern=None):
 
-        unifier = Unifier()
         suffix_pattern = None
         if match_suffix_pattern:
             suffix_pattern = default_suffix_pattern
@@ -264,7 +265,7 @@ class Tokenizer():
                 garray = word2garray.get(token, None)
 
             if not garray:
-                garray = unifier.get_garray(token)
+                garray = self.__unifier.get_garray(token)
 
             # assert not isinstance(garray, str)
             garray_str = json.dumps(garray)
