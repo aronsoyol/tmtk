@@ -245,6 +245,7 @@ class Tokenizer():
 
     def tagger(self,
                word_list, word2garray=None,
+               match_suffix_pattern=True,
                external_suffix_pattern=None):
 
         unifier = Unifier()
@@ -257,6 +258,8 @@ class Tokenizer():
 
             if not garray:
                 garray = unifier.get_garray(token)
+
+            assert isinstance(garray, list)
 
             if isinstance(garray, list):
                 garray_str = json.dumps(garray)
@@ -274,13 +277,14 @@ class Tokenizer():
             if garray[-3:] == [659, 212, 660]:
                 taglist += ["名"]
 
-            for (tag, patterns) in default_suffix_pattern:
-                for ptrn in patterns:
-                    if tuple(garray[-len(ptrn):]) == ptrn:
-                        taglist += tag
-                        break
-            if external_suffix_pattern:
-                for (tag, patterns) in external_suffix_pattern:
+            if match_suffix_pattern:
+                if external_suffix_pattern:
+                    suffix_pattern = default_suffix_pattern + \
+                                        external_suffix_pattern
+                else:
+                    suffix_pattern = default_suffix_pattern
+
+                for (tag, patterns) in suffix_pattern:
                     for ptrn in patterns:
                         if tuple(garray[-len(ptrn):]) == ptrn:
                             taglist += tag
