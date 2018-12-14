@@ -50,7 +50,7 @@ class Uniqode():
                 raise Exception("garray is not list")
 
     def md5(self):
-        md5_.update(str(self.__garray))
+        md5_.update(str(self.__garray).encode())
         return md5_.hexdigest()
 
     def __hash__(self):
