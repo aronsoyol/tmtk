@@ -281,7 +281,7 @@ class Tokenizer():
                 for (tag, patterns) in suffix_pattern:
                     for ptrn in patterns:
                         if tuple(garray[-len(ptrn):]) == ptrn:
-                            taglist += tag
+                            taglist += [t + "_" for t in tag]
                             break
 
             yield (token, garray, list(set(taglist)))
