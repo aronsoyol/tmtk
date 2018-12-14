@@ -206,7 +206,9 @@ default_suffix_pattern = (
             # ugqi 阴性
             (248, 639, 243),
             # gqi 阳性
-            (212, 212, 704, 243)
+            (212, 212, 704, 243),
+            # 不知道是什么
+            (659, 212, 660)
         )
     )
 )
@@ -249,23 +251,23 @@ class Tokenizer():
                external_suffix_pattern=None):
 
         unifier = Unifier()
+        suffix_pattern = None
+        if match_suffix_pattern:
+            suffix_pattern = default_suffix_pattern
+            if external_suffix_pattern:
+                suffix_pattern += external_suffix_pattern
+
         for token in word_list:
             garray = None
             garray_str = None
             if word2garray:
                 garray = word2garray.get(token, None)
-                garray_str = ""
 
             if not garray:
                 garray = unifier.get_garray(token)
 
-            assert isinstance(garray, list)
-
-            if isinstance(garray, list):
-                garray_str = json.dumps(garray)
-            else:
-                garray_str = garray
-                garray = json.loads(garray_str)
+            # assert not isinstance(garray, str)
+            garray_str = json.dumps(garray)
 
             words = self.__dictionary.get(garray_str, None)
 
@@ -274,16 +276,7 @@ class Tokenizer():
                 for word in words:
                     taglist += word["pos"]
 
-            if garray[-3:] == [659, 212, 660]:
-                taglist += ["名"]
-
-            if match_suffix_pattern:
-                if external_suffix_pattern:
-                    suffix_pattern = default_suffix_pattern + \
-                                        external_suffix_pattern
-                else:
-                    suffix_pattern = default_suffix_pattern
-
+            if suffix_pattern:
                 for (tag, patterns) in suffix_pattern:
                     for ptrn in patterns:
                         if tuple(garray[-len(ptrn):]) == ptrn:
