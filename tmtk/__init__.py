@@ -56,3 +56,6 @@ class Uniqode():
 
     def __str__(self):
         return str(self.__garray)
+
+    def glyph_array(self):
+        return tuple(self.__garray)
