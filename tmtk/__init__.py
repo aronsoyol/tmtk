@@ -7,12 +7,14 @@ from .__unifier import Unifier
 
 from .__token import Tokenizer
 
+from hashlib import md5
+import json
 # from . convert2unicode import Converter
 
 unifier = Unifier()
 tokenizer = Tokenizer()
 shaper = Shaper2()
-from hashlib import md5
+
 
 def convert2unicode(text_m, converter="aronnote"):
 
@@ -50,8 +52,8 @@ class Uniqode():
 
     def md5(self):
         md5_ = md5()
-        bate_array = str(self.__garray).encode()
-        md5_.update(bate_array)
+        byte_array = json.dumps(self.__garray).encode()
+        md5_.update(byte_array)
         return md5_.hexdigest()
 
     def __hash__(self):
