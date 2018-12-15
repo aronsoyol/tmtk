@@ -13,7 +13,6 @@ unifier = Unifier()
 tokenizer = Tokenizer()
 shaper = Shaper2()
 from hashlib import md5
-md5_ = md5()
 
 def convert2unicode(text_m, converter="aronnote"):
 
@@ -50,7 +49,9 @@ class Uniqode():
                 raise Exception("garray is not list")
 
     def md5(self):
-        md5_.update(str(self.__garray).encode())
+        md5_ = md5()
+        bate_array = str(self.__garray).encode()
+        md5_.update(bate_array)
         return md5_.hexdigest()
 
     def __hash__(self):
