@@ -196,6 +196,7 @@ convert_rules = (
     (153, (0, 0xE314), (0,), (0,), (0x1833,), 0,),
     (154, (1, 0xE315, 0xE317), (0,), (0,), (0x1834,), 0,),
     (155, (1, 0xE318, 0xE31D), (0,), (0,), (0x1835,), 0,),
+    (156, (0, 0xE321), (0,), (0, 0xe27b), (0x1836, 0x180B), 0,),
     (156, (1, 0xE31E, 0xE321), (0,), (0, 0xe27e), (0x1836, 0x180B), 0,),
     (156, (1, 0xE31E, 0xE321), (0,), (0,), (0x1836,), 0,),
     (157, (1, 0xE322, 0xE328), (0,), (0,), (0x1837,), 0,),
@@ -332,13 +333,15 @@ def convert2unicode_aron(text_m):
 
 
 if __name__ == '__main__':
-    text_m = '  '
-    print([hex(ord(ch)) for ch in text_m])
-    text_u, e = __convert2unicode_aron(text_m)
-    print([hex(ord(ch)) for ch in text_u])
+    # text_m = '  '
+    # print([hex(ord(ch)) for ch in text_m])
+    # text_u, e = __convert2unicode_aron(text_m)
+    # print([hex(ord(ch)) for ch in text_u])
 
-    print(text_u)
-    print(e)
+    # print(text_u)
+    # print(e)
 
 
-    print(convert2unicode_aron("\ue251\n"))
+    # print(convert2unicode_aron("\ue251\n"))
+
+    print(convert2unicode_aron(" "))
