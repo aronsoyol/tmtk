@@ -324,8 +324,11 @@ def __convert2unicode_aron(text_m):
 
 
 def convert2unicode_aron(text_m):
-    text_u, _ = __convert2unicode_aron(text_m)
-    return text_u
+    text_u = []
+    for line in re.split('\r?\n', text_m):
+        text_u_sub, _ = __convert2unicode_aron(line)
+        text_u.append(text_u_sub)
+    return "\n".join(text_u)
 
 
 if __name__ == '__main__':
@@ -336,3 +339,6 @@ if __name__ == '__main__':
 
     print(text_u)
     print(e)
+
+
+    print(convert2unicode_aron("\ue251\n"))
