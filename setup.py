@@ -17,7 +17,8 @@ setup(
         'numpy',
         'pillow',
         'imagehash',
-        'pygobject'],
+        # 'pygobject'
+        ],
     packages=['tmtk', 'tmtk.__utils'],
     include_package_data=True,
     package_data={'tmtk': [
