@@ -157,8 +157,16 @@ class Unifier():
         return self.__shaper.shape(text)
 
     def get_garray(self, word, ii_to_i=True):
+
         if ii_to_i:
             word = re.sub("\u1822+", "\u1822", word)
+
+        # '0x182c', '0x180b' = '0x182d'
+        # h + \u180b = g
+        # monh\u180bvl 和 mongol 字形有一点区别，
+        # 应该按照一样的东西来看待，虽然根本就写错了
+        word = re.sub("\u182c\u180b", "\u182d", word)
+
         g_lst = None
 
         g_lst = self.shape(word)
@@ -170,4 +178,3 @@ class Unifier():
         return self.glyph_decompositoin(ls)
 
     # def unify_corpus(self):
-
