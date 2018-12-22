@@ -20,13 +20,15 @@ ft_face.set_char_size(size=1, resolution=qah.base_dpi)
 
 hb_font = hb.Font.ft_create(ft_face)
 
+buf = hb.Buffer.create()
+
 
 class Shaper2():
     def __init__(self, font_path=""):
         pass
 
     def shape(self, word):
-        buf = hb.Buffer.create()
+        buf.clear_contents()
         buf.add_str(word)
         buf.direction = HB.DIRECTION_LTR
         buf.script = HB.SCRIPT_MONGOLIAN
