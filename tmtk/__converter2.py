@@ -337,7 +337,7 @@ def convert2unicode_aron(text_m):
     text_u = []
     for line in re.split('\r?\n', text_m):
         # 网上获取的文本包含 U00A0(&nbsp;)
-        line.replace("\u00a0", " ")
+        line = line.replace("\u00a0", " ")
         text_u_sub, _ = __convert2unicode_aron(line)
         text_u.append(text_u_sub)
     return "\n".join(text_u)
