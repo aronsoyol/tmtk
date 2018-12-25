@@ -48,13 +48,19 @@ class Uniqode():
             if isinstance(garray, list):
                 self.__garray = garray
             else:
-                raise Exception("garray is not list")
+                raise Exception("garray is not a list")
+        else:
+            raise Exception("please initialise with "
+                            "at least one word or garray")
 
     def md5(self):
         md5_ = md5()
         byte_array = json.dumps(self.__garray).encode()
         md5_.update(byte_array)
         return md5_.hexdigest()
+
+    def uniqode(self):
+        return "".join([chr(0xf000 + g) for g in self.__garray])
 
     def __hash__(self):
         return hash(str(self.__garray))
@@ -66,4 +72,4 @@ class Uniqode():
         return str(self.__garray)
 
     def glyph_array(self):
-        return tuple(self.__garray)
+        return self.__garray
