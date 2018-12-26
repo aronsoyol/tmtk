@@ -150,11 +150,13 @@ convert_rules = (
     (105, (1, 0xE295, 0xE29A), (0,), (0,), (0x1825,), 0,),
     (106, (0, 0xE29B), (0,), (0,), (0x1825, 0x180C), 0,),
     (107, (1, 0xE29C, 0xE29F), (0,), (0,), (0x1825,), 0,),
+    (107, (1, 0xE29E, 0xE29F), (0,), (1, 0xE27E, 0xE280), (0x1825,), 1,),
     (108, (0, 0xE2A0), (0,), (0,), (0x1826,), 0,),
     (109, (0, 0xE2A1), (0,), (0,), (0x1826, 0x180B), 0,),
     (110, (1, 0xE2A2, 0xE2A7), (0,), (0,), (0x1826,), 0,),
     (111, (0, 0xE2A8), (0,), (0,), (0x1826, 0x180C), 0,),
     (112, (1, 0xE2A9, 0xE2AA), (0,), (0,), (0x1826,), 0,),
+    (113, (0, 0xE2AB, 0xE2AC), (0,), (1, 0xE27E, 0xE280), (0x1826,), 1,),
     (113, (0, 0xE2AB), (0,), (0, 0xE321), (0x1826, 0x180B), 1,),
     (114, (0, 0xE2AB), (0,), (0,), (0x1826,), 0,),
     (115, (0, 0xE2AC), (0,), (0,), (0x1826,), 0,),
@@ -338,7 +340,7 @@ def convert2unicode_aron(text_m):
     for line in re.split('\r?\n', text_m):
         # 网上获取的文本包含 U00A0(&nbsp;)
         line = line.replace("\u00a0", " ")
-        line = re.sub("[\ue29f\ue2ac][\ue27e-\ue280]", "\ue29d", line)
+        # line = re.sub("[\ue29e\ue29f\ue2ab\ue2ac][\ue27e-\ue280]", "\ue29d", line)
         text_u_sub, _ = __convert2unicode_aron(line)
         text_u.append(text_u_sub)
     return "\n".join(text_u)
