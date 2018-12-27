@@ -43,19 +43,26 @@ try :
 except ImportError :
     cairo = None
 #end try
+try:
+    ft = ct.cdll.LoadLibrary("libfreetype.dylib")
+except:
+    ft = ct.cdll.LoadLibrary("libfreetype.so")
 
-ft = ct.cdll.LoadLibrary("libfreetype.dylib")
 try :
     fc = ct.cdll.LoadLibrary("libfontconfig.dylib")
 except OSError as fail :
     if True : # if fail.errno == 2 : # ENOENT
       # no point checking, because it is None! (Bug?)
-        fc = None
+        fc = ct.cdll.LoadLibrary("libfontconfig.so")
     else :
         raise
     #end if
 #end try
-libc = ct.cdll.LoadLibrary("libc.dylib")
+try:
+    libc = ct.cdll.LoadLibrary("libc.dylib")
+except:
+    libc = ct.cdll.LoadLibrary("libc.so")
+
 
 def struct_to_dict(item, itemtype, indirect, extra_decode = None) :
     "decodes the elements of a ctypes Structure into a dict. extra_decode" \
