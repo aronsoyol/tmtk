@@ -61,7 +61,7 @@ except OSError as fail :
 try:
     libc = ct.cdll.LoadLibrary("libc.dylib")
 except:
-    libc = ct.cdll.LoadLibrary("libc.so")
+    libc = ct.cdll.LoadLibrary("libc.so.6")
 
 
 def struct_to_dict(item, itemtype, indirect, extra_decode = None) :
