@@ -194,6 +194,7 @@ convert_rules = (
     (137, (1, 0xE2F1, 0xE2F6), (0,), (0,), (0x182E,), 0,),
     (138, (1, 0xE2F7, 0xE2FC), (0,), (0,), (0x182F,), 0,),
     (139, (1, 0xE2FD, 0xE302), (0,), (0,), (0x1830,), 0,),
+    # (141, (1, 0xE308, 0xE30A), (0,), (0, 0xe289, 0xe291), (0x1832, 0x1823,), 1,),
     (140, (1, 0xE303, 0xE307), (0,), (0,), (0x1831,), 0,),
     (141, (1, 0xE308, 0xE30A), (0,), (0,), (0x1832,), 0,),
     (142, (0, 0xE30B), MENK_CODE, (0,), (0x1832,), 0,),
@@ -330,7 +331,7 @@ def __convert2unicode_aron(text_m):
         sub_text = text_m[max(0, i-1): min(len(text_m), i+2)]
         for (ptrn, repl, look_ahead) in replace_rule_dict[sub_text[1]]:
             # print("&"*10)
-            pp1 = (ptrn, repl)
+            # pp1 = (ptrn, repl)
             # print(ptrn)
             m = ptrn.match(sub_text)
             if m and repl:
@@ -377,5 +378,21 @@ if __name__ == '__main__':
 
 
     # print(convert2unicode_aron("\ue251\n"))
+    menk_text = (
+        "      "
+        "     "
+        "     "
+        "      "
+        "      "
+        "      "
+        "     "
+        "       "
+        "        "
+        "       "
+        "  "
+    )
+    from tqdm import tqdm
 
-    print(convert2unicode_aron(" "))
+    for i in tqdm(range(10**6)):
+        for j in range(100):
+            convert2unicode_aron(menk_text)
