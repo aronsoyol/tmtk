@@ -71,7 +71,8 @@ class Unifier():
         self.__ft_face = freetype.Face(self.__font_path)
         self.__ft_face.set_char_size(48 * 64)
 
-        self.__render_all_glyphs()
+        font_name = os.path.basename(self.__font_path).replace(".", "_")
+        self.__render_all_glyphs(font_name)
         self.__glyph_decompositoin_table = \
             get_default_glyph_decompositoin_table()
         self.__shaper = Shaper()
@@ -108,10 +109,10 @@ class Unifier():
     def show_unicode(word):
         return [hex(ord(w)) for w in word]
 
-    def __render_all_glyphs(self):
+    def __render_all_glyphs(self, font_name=""):
 
         # self.__glyph_hash_table = {}
-        gid_2_hash_file = "gid_2_hash.json"
+        gid_2_hash_file = "gid_2_hash_%s.json"%(font_name)
         this_dir, this_filename = os.path.split(__file__)
 
         gid_2_hash_file_path = os.path.join(
