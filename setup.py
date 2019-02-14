@@ -24,6 +24,7 @@ setup(
     package_data={'tmtk': [
         'MongolianWhite.ttf',
         'dictionary_garray.jl',
-        'gid_2_hash.json']},
+        'gid_2_hash.json',
+        'menk_data.json']},
     test_suite='test'
 )

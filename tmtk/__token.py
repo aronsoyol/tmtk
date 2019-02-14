@@ -215,17 +215,32 @@ default_suffix_pattern = (
 
 
 class Tokenizer():
-    __ptrn2 = re.compile("(\u202f[^\u202f ]+)")
-    __ptrn1 = re.compile("([{0}]+)".format("".join(MONGOLIAN_WORD_CHAR)))
+    __ptrn1_u = re.compile("([{0}]+)".format("".join(MONGOLIAN_WORD_CHAR)))
+    __ptrn2_u = re.compile("(\u202f[^\u202f ]+)")
+
+    __ptrn1_m = re.compile(r"([\ue263-\ue34f]+)")
+    __ptrn2_m = re.compile(r"(\ue263[^\ue263 ]+)")
+
     __dictionary = {}
 
-    def __init__(self):
+    def __init__(self, code_type=0):
+        """[summary]
+        Keyword Arguments:
+            code_type {int} -- [description] (default: {0}, Unicode:0, Menkcode 1)
+        """
+
         this_dir, this_filename = os.path.split(__file__)
         dictionary_path = os.path.join(
             this_dir,
             "dictionary_garray.jl"
         )
         self.__unifier = Unifier()
+        if code_type == 0:
+            self.__ptrn1 = self.__ptrn1_u
+            self.__ptrn2 = self.__ptrn2_u
+        else:
+            self.__ptrn1 = self.__ptrn1_m
+            self.__ptrn2 = self.__ptrn2_m
 
         with open(dictionary_path, "r") as file:
             for line in file:

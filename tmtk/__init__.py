@@ -15,6 +15,7 @@ unifier = Unifier()
 tokenizer = Tokenizer()
 shaper = Shaper2()
 
+__version__ = "0.0.1"
 
 def convert2unicode(text_m, converter="aronnote"):
 

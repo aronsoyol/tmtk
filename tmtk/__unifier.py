@@ -50,6 +50,27 @@ def get_default_glyph_decompositoin_table():
     }
 
 
+class MenkUnifier():
+
+    def __init__(self, *args, **kwargs):
+        this_dir, this_filename = os.path.split(__file__)
+        menk_data_path = os.path.join(this_dir, "menk_data.json")
+        with open(menk_data_path, "r") as json_file:
+            data = json.load(json_file)
+            self.composite_table = data["composite"]
+            self.substitute_table = data["substitute"]
+
+        return super().__init__(*args, **kwargs)
+
+    def unique(self, word):
+        ls = list()
+        for ch in word:
+            sub = self.substitute_table.get(ch, ch)
+            com = self.composite_table.get(sub, sub)
+            ls.append(com)
+        return "".join(ls)
+
+
 class Unifier():
 
     __hash_to_id_dict = defaultdict(lambda: list())
@@ -129,7 +150,6 @@ class Unifier():
                 if img:
                     hs = str(imagehash.phash(img))
                     self.__gid_2_hash[n] = hs
-
             with open(gid_2_hash_file_path, "w") as file:
                 json.dump(self.__gid_2_hash, fp=file, indent=2)
 
@@ -178,4 +198,9 @@ class Unifier():
                 ls.append(self.__gid_to_uniq_gid[g])
         return self.glyph_decompositoin(ls)
 
-    # def unify_corpus(self):
+    def unique(self, word, ii_to_i=True):
+        garray = self.get_garray(word, ii_to_i=True)
+        return "".join([chr(0xf000 + g) for g in garray])
+
+    def get_gid_to_uniq_gid(self):
+        return self.__gid_to_uniq_gid
