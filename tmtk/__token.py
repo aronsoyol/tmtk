@@ -218,8 +218,8 @@ class Tokenizer():
     __ptrn1_u = re.compile("([{0}]+)".format("".join(MONGOLIAN_WORD_CHAR)))
     __ptrn2_u = re.compile("(\u202f[^\u202f ]+)")
 
-    __ptrn1_m = re.compile(r"([\ue263-\ue34f]+)")
-    __ptrn2_m = re.compile(r"([\ue264-\ue34f]+)")
+    __ptrn1_m = re.compile(r"([\ue264-\ue34f]+)")
+    __ptrn2_m = re.compile(r"([\ue263-\ue34f]+)")
 
     __dictionary = {}
 
