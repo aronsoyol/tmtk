@@ -219,7 +219,7 @@ class Tokenizer():
     __ptrn2_u = re.compile("(\u202f[^\u202f ]+)")
 
     __ptrn1_m = re.compile(r"([\ue263-\ue34f]+)")
-    __ptrn2_m = re.compile(r"(\ue263[^\ue263 ]+)")
+    __ptrn2_m = re.compile(r"([\ue264-\ue34f]+)")
 
     __dictionary = {}
 
@@ -235,6 +235,7 @@ class Tokenizer():
             "dictionary_garray.jl"
         )
         self.__unifier = Unifier()
+        self.__code_type = code_type
         if code_type == 0:
             self.__ptrn1 = self.__ptrn1_u
             self.__ptrn2 = self.__ptrn2_u
@@ -248,12 +249,12 @@ class Tokenizer():
                 garray_str = json.dumps(item["garray"])
                 self.__dictionary[garray_str] = item["words"]
 
-    def tokenize(self, text, split_suffix=False, only_mongolian=True):
+    def tokenize(self, text, split_suffix=True, only_mongolian=True):
         level1 = self.__ptrn1.split(text)
         if only_mongolian:
             level1 = level1[1::2]
 
-        if not split_suffix:
+        if not split_suffix or self.__code_type == 1:
             return level1
 
         level2 = []
