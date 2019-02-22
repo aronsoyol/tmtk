@@ -214,12 +214,37 @@ default_suffix_pattern = (
 )
 
 
+
+MENK_FINAL = (
+    "\ue264\ue265\ue268\ue269\ue26a\ue26b"
+    "\ue270\ue273\ue274\ue279\ue275\ue27b"
+    "\ue27c\ue282\ue283\ue285\ue286\ue28b"
+    "\ue28d\ue28e\ue293\ue294\ue296\ue297"
+    "\ue298\ue299\ue2a0\ue2a1\ue2a3\ue2a4"
+    "\ue2a5\ue2a6\ue2ad\ue2af\ue2b5\ue2b6"
+    "\ue2bb\ue2c3\ue2c4\ue2ca\ue2d6\ue2d7"
+    "\ue2e7\ue2e8\ue2e9\ue2f3\ue2f9\ue2ff"
+    "\ue300\ue305\ue30a\ue312\ue316\ue31b"
+    "\ue31c\ue31f\ue325\ue32a\ue32b\ue32f"
+    "\ue335\ue33b\ue340\ue343\ue346")
+
+MENK_ORHICA = "\ue269\ue26a\ue26b\ue274\ue275"
+
+
 class Tokenizer():
+
     __ptrn1_u = re.compile("([{0}]+)".format("".join(MONGOLIAN_WORD_CHAR)))
     __ptrn2_u = re.compile("(\u202f[^\u202f ]+)")
 
     __ptrn1_m = re.compile(r"([\ue264-\ue34f]+)")
     __ptrn2_m = re.compile(r"([\ue263-\ue34f]+)")
+
+    __ptrn3_m = re.compile(
+        r"([\ue264-\ue34f]+?[{}][{}]?)".format(
+            MENK_FINAL,
+            MENK_ORHICA
+        )
+    )
 
     __dictionary = {}
 
@@ -249,13 +274,18 @@ class Tokenizer():
                 garray_str = json.dumps(item["garray"])
                 self.__dictionary[garray_str] = item["words"]
 
-    def tokenize(self, text, split_suffix=True, only_mongolian=True):
+    def __call__(self, text, split_suffix=True, only_mongolian=True):
         level1 = self.__ptrn1.split(text)
         if only_mongolian:
             level1 = level1[1::2]
 
         if not split_suffix or self.__code_type == 1:
-            return level1
+            for t in level1:
+                for i, tt in enumerate(self.__ptrn3_m.split(t)):
+                    if only_mongolian and i % 2 == 0:
+                        continue
+                    yield tt
+            return
 
         level2 = []
         for item in level1:
