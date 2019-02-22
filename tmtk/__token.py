@@ -240,7 +240,7 @@ class Tokenizer():
     __ptrn2_m = re.compile(r"([\ue263-\ue34f]+)")
 
     __ptrn3_m = re.compile(
-        r"([\ue264-\ue34f]+?[{}][{}]?)".format(
+        r"([\ue264-\ue34f]*?[{}][{}]?)".format(
             MENK_FINAL,
             MENK_ORHICA
         )
